@@ -1,0 +1,83 @@
+<div class="page-container">
+  <div class="header-row">
+    <h1>Upravljanje korisnicima</h1>
+    <button class="add-btn" (click)="openAdd()">+ Novi korisnik</button>
+  </div>
+
+  @if (successMessage()) {
+    <div class="success-message">{{ successMessage() }}</div>
+  }
+
+  @if (showForm()) {
+    <div class="card form-card">
+      <h2>{{ editingId() ? 'Uredi korisnika' : 'Novi korisnik' }}</h2>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Korisničko ime *</label>
+            <input type="text" formControlName="username" />
+          </div>
+          <div class="form-group">
+            <label>Lozinka {{ editingId() ? '' : '*' }}</label>
+            <input type="password" formControlName="password" [placeholder]="editingId() ? 'Ostavi prazno za ne mijenjati' : ''" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Ime</label>
+            <input type="text" formControlName="ime" />
+          </div>
+          <div class="form-group">
+            <label>Prezime</label>
+            <input type="text" formControlName="prezime" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" formControlName="email" />
+        </div>
+        @if (errorMessage()) {
+          <div class="error-message">{{ errorMessage() }}</div>
+        }
+        <div class="form-actions">
+          <button type="submit" class="submit-button">{{ editingId() ? 'Spremi' : 'Kreiraj' }}</button>
+          <button type="button" class="cancel-btn" (click)="cancel()">Odustani</button>
+        </div>
+      </form>
+    </div>
+  }
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Korisničko ime</th>
+          <th>Ime</th>
+          <th>Prezime</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Akcije</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (user of users(); track user.id) {
+          <tr [class.inactive]="!user.isActive">
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.ime || '-' }}</td>
+            <td>{{ user.prezime || '-' }}</td>
+            <td>{{ user.email || '-' }}</td>
+            <td><span class="status-badge" [class.active]="user.isActive">{{ user.isActive ? 'Aktivan' : 'Neaktivan' }}</span></td>
+            <td class="actions">
+              <button class="action-btn edit" (click)="openEdit(user)">Uredi</button>
+              @if (user.isActive) {
+                <button class="action-btn deactivate" (click)="deactivate(user.id)">Deaktiviraj</button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

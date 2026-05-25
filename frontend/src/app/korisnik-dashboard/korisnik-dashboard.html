@@ -1,0 +1,37 @@
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <h1>Korisnički portal</h1>
+    <div class="header-actions">
+      <span class="user-name">{{ korisnik()?.ime }} {{ korisnik()?.prezime }}</span>
+      <button class="logout-btn" (click)="logout()">Odjava</button>
+    </div>
+  </header>
+
+  <nav class="dashboard-nav">
+    <a routerLink="/korisnik/profil" class="nav-card">
+      <div class="nav-icon">&#128100;</div>
+      <div class="nav-title">Moj profil</div>
+      <div class="nav-desc">Pregledajte i uredite svoje podatke</div>
+    </a>
+    <a routerLink="/korisnik/ponude" class="nav-card">
+      <div class="nav-icon">&#128196;</div>
+      <div class="nav-title">Zahtjevi za ponude</div>
+      <div class="nav-desc">Zatražite ponudu za atestiranje</div>
+    </a>
+    <a routerLink="/korisnik/obavijesti" class="nav-card">
+      <div class="nav-icon">&#128276;</div>
+      <div class="nav-title">Obavijesti</div>
+      <div class="nav-desc">
+        Pregledajte obavijesti
+        @if (neprocitaneObavijesti() > 0) {
+          <span class="badge">{{ neprocitaneObavijesti() }}</span>
+        }
+      </div>
+    </a>
+    <a routerLink="/korisnik/recenzije" class="nav-card">
+      <div class="nav-icon">&#11088;</div>
+      <div class="nav-title">Recenzije</div>
+      <div class="nav-desc">Ostavite recenziju naših usluga</div>
+    </a>
+  </nav>
+</div>

@@ -1,0 +1,118 @@
+.uskoro-istice-grid {
+  padding: 2rem;
+  font-family: system-ui, Arial, sans-serif;
+  background: var(--bg, #f9f7fd);
+}
+
+.uskoro-istice-grid h1 {
+  margin-bottom: 1.2rem;
+  color: var(--accent, #a259f7);
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px 0 rgba(162,89,247,0.08);
+  overflow: hidden;
+}
+
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.styled-table thead tr {
+  background: linear-gradient(90deg, var(--accent, #a259f7) 60%, var(--accent-light, #f7e1ff) 100%);
+  color: #fff;
+  text-align: left;
+  border-bottom: 2px solid var(--accent-light, #f7e1ff);
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 14px 18px;
+  font-size: 1rem;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid var(--border, #e0e7ef);
+  transition: background 0.15s;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #faf6ff;
+}
+
+.styled-table tbody tr:hover {
+  background: var(--accent-light, #f7e1ff);
+}
+
+.client-cell {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent, #a259f7), var(--accent-dark, #6c2bd7));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-right: 0.7rem;
+  box-shadow: 0 2px 8px 0 rgba(162,89,247,0.10);
+}
+
+.client-name {
+  font-weight: 500;
+  color: #333;
+}
+
+.status-message,
+.error-message,
+.empty-state {
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.error-message {
+  color: #b91c1c;
+}
+
+.empty-state {
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .uskoro-istice-grid {
+    padding: 1rem;
+  }
+
+  .styled-table {
+    min-width: 640px;
+    white-space: nowrap;
+    font-size: 14px;
+  }
+
+  .styled-table th,
+  .styled-table td {
+    padding: 8px 10px;
+  }
+
+  .avatar {
+    width: 28px;
+    height: 28px;
+    margin-right: 8px;
+  }
+}

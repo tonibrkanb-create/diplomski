@@ -1,0 +1,1 @@
+export { PostavkeComponent } from './postavke';

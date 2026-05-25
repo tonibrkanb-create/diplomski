@@ -1,0 +1,33 @@
+<div class="uskoro-istice-grid">
+  <h1>Uskoro Ističe</h1>
+
+  <div *ngIf="loading" class="status-message">Učitavanje...</div>
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+
+  <div class="table-scroll" *ngIf="!loading && !error">
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Naručitelj</th>
+          <th>Radni Nalog</th>
+          <th>Aktivnost</th>
+          <th>Datum Isteka</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of rows">
+          <td class="client-cell">
+            <div class="avatar">{{ row.narucitelj.charAt(0) }}</div>
+            {{ row.narucitelj }}
+          </td>
+          <td>{{ row.radniNalog }}</td>
+          <td>{{ row.aktivnost }}</td>
+          <td>{{ row.datumIsteka }}</td>
+        </tr>
+        <tr *ngIf="rows.length === 0">
+          <td colspan="4" class="empty-state">Nema podataka za prikaz.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

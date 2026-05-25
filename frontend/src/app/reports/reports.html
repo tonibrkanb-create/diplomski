@@ -1,0 +1,79 @@
+<div class="page-container">
+  <h1>Izvještaji</h1>
+
+  <div class="tabs">
+    <button class="tab" [class.active]="activeTab() === 'nalozi'" (click)="switchTab('nalozi')">Radni nalozi</button>
+    <button class="tab" [class.active]="activeTab() === 'narucitelji'" (click)="switchTab('narucitelji')">Naručitelji</button>
+  </div>
+
+  @if (activeTab() === 'nalozi') {
+    <div class="card">
+      <div class="filters">
+        <div class="filter-group">
+          <label>Od</label>
+          <input type="date" [(ngModel)]="filterFrom" />
+        </div>
+        <div class="filter-group">
+          <label>Do</label>
+          <input type="date" [(ngModel)]="filterTo" />
+        </div>
+        <div class="filter-group">
+          <label>Status</label>
+          <select [(ngModel)]="filterStatus">
+            <option value="">Svi</option>
+            <option value="aktivan">Aktivan</option>
+            <option value="zavrsen">Završen</option>
+            <option value="fakturiran">Fakturiran</option>
+          </select>
+        </div>
+        <div class="filter-actions">
+          <button class="btn apply" (click)="applyFilters()">Primijeni</button>
+          <button class="btn clear" (click)="clearFilters()">Očisti</button>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Naručitelj</th><th>Datum</th><th>Status</th><th>Djelatnik</th><th>Aktivnosti</th></tr>
+        </thead>
+        <tbody>
+          @for (n of nalozi(); track n.id) {
+            <tr>
+              <td>{{ n.id }}</td>
+              <td>{{ n.naruciteljNaziv }}</td>
+              <td>{{ n.datum }}</td>
+              <td>{{ n.status }}</td>
+              <td>{{ n.assignedUser || '-' }}</td>
+              <td>{{ n.aktivnostiCount }}</td>
+            </tr>
+          } @empty {
+            <tr><td colspan="6" class="empty">Nema rezultata</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  @if (activeTab() === 'narucitelji') {
+    <div class="card">
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Naziv</th><th>Adresa</th><th>Kontakt</th><th>Broj naloga</th></tr>
+        </thead>
+        <tbody>
+          @for (n of narucitelji(); track n.id) {
+            <tr>
+              <td>{{ n.id }}</td>
+              <td>{{ n.naziv }}</td>
+              <td>{{ n.adresa }}</td>
+              <td>{{ n.kontakt }}</td>
+              <td>{{ n.naloziCount }}</td>
+            </tr>
+          } @empty {
+            <tr><td colspan="5" class="empty">Nema naručitelja</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

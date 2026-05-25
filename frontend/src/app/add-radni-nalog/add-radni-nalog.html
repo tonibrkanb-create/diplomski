@@ -1,0 +1,118 @@
+<div class="form-container">
+  <h2>Dodaj radni nalog</h2>
+  <form [formGroup]="radniNalogForm" (ngSubmit)="onSubmit()">
+
+    <div>
+      <label>Broj naloga:<br>
+        <input formControlName="brojNaloga" />
+      </label>
+    </div>
+
+    <div>
+      <label>Broj ponude:<br>
+        <input formControlName="brojPonude" />
+      </label>
+    </div>
+
+    <div>
+      <label>Broj računa:<br>
+        <input formControlName="brojRacuna" />
+      </label>
+    </div>
+
+    <div>
+      <label>Narudžbenica:<br>
+        <input formControlName="narudzbenica" />
+      </label>
+    </div>
+
+    <div>
+      <label>Ugovor:<br>
+        <input formControlName="ugovor" />
+      </label>
+    </div>
+
+    <div class="narucitelj-field">
+      <label>Naručitelj:</label>
+      <details class="single-dropdown" #naruciteljDropdown>
+        <summary class="single-dropdown__summary">{{ selectedNaruciteljLabel }}</summary>
+        <div class="single-dropdown__panel">
+          <input
+            type="text"
+            class="single-dropdown__search"
+            placeholder="Pretraži naručitelja..."
+            [value]="naruciteljSearchTerm"
+            (input)="updateNaruciteljSearch($any($event.target).value)"
+          />
+          <div *ngFor="let n of filteredNarucitelji">
+            <button type="button" class="single-dropdown__option" (click)="selectNarucitelj(n, naruciteljDropdown)">
+              {{ n.name }}
+            </button>
+          </div>
+          <small class="single-dropdown__empty" *ngIf="filteredNarucitelji.length === 0">Nema rezultata.</small>
+        </div>
+      </details>
+      <small class="selected-values">Odabrano: {{ selectedNaruciteljLabel }}</small>
+    </div>
+
+    <div>
+      <label>Datum:<br>
+        <input type="date" formControlName="datum" />
+      </label>
+    </div>
+    <div>
+      <label>Objekt:<br>
+        <input formControlName="objekt" />
+      </label>
+    </div>
+
+    <div>
+      <label>Opis:<br>
+        <textarea formControlName="opis" rows="4"></textarea>
+      </label>
+    </div>
+
+    <div class="aktivnosti-field">
+      <label>Aktivnosti:</label>
+      <details class="multi-dropdown">
+        <summary class="multi-dropdown__summary">{{ selectedAktivnostiLabel }}</summary>
+        <div class="multi-dropdown__panel">
+          <input
+            type="text"
+            class="multi-dropdown__search"
+            placeholder="Pretraži aktivnost..."
+            [value]="aktivnostiSearchTerm"
+            (input)="updateAktivnostiSearch($any($event.target).value)"
+          />
+          <div *ngFor="let aktivnost of filteredAktivnosti">
+            <label class="multi-dropdown__option">
+              <input
+                type="checkbox"
+                [checked]="aktivnost.id ? isAktivnostSelected(aktivnost.id) : false"
+                [disabled]="!aktivnost.id"
+                (change)="aktivnost.id && toggleAktivnost(aktivnost.id, $any($event.target).checked)"
+              />
+              {{ aktivnost.naziv }}
+            </label>
+          </div>
+          <small class="single-dropdown__empty" *ngIf="filteredAktivnosti.length === 0">Nema rezultata.</small>
+        </div>
+      </details>
+      <small class="selected-values">Odabrano: {{ selectedAktivnostiLabel }}</small>
+    </div>
+
+    <div>
+      <label>
+        <input type="checkbox" formControlName="fakturirano" /> Fakturirano
+      </label>
+    </div>
+    <div>
+      <label>
+        <input type="checkbox" formControlName="zavrseno" /> Završeno
+      </label>
+    </div>
+    <div class="form-group">
+      <button type="submit" [disabled]="radniNalogForm.invalid">Dodaj radni nalog</button>
+    </div>
+  </form>
+</div>

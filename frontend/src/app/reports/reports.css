@@ -1,0 +1,19 @@
+.page-container { min-height: 100vh; background: #f9f7fd; padding: 24px; }
+h1 { font-size: 22px; color: #333; margin: 0 0 20px 0; }
+.tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+.tab { padding: 8px 20px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; background: #eee; color: #555; }
+.tab.active { background: linear-gradient(135deg, #a259f7, #7c3aed); color: #fff; }
+.card { background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 16px; overflow-x: auto; }
+.filters { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #eee; }
+.filter-group { display: flex; flex-direction: column; gap: 4px; }
+.filter-group label { font-size: 12px; color: #666; font-weight: 500; }
+.filter-group input, .filter-group select { padding: 6px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 13px; }
+.filter-group input:focus, .filter-group select:focus { outline: none; border-color: #a259f7; }
+.filter-actions { display: flex; gap: 6px; align-items: flex-end; }
+.btn { padding: 7px 14px; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.btn.apply { background: linear-gradient(135deg, #a259f7, #7c3aed); color: #fff; }
+.btn.clear { background: #eee; color: #333; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { text-align: left; padding: 10px 12px; border-bottom: 2px solid #eee; color: #666; font-weight: 600; }
+td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; }
+td.empty { text-align: center; color: #999; padding: 30px; }

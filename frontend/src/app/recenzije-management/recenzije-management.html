@@ -1,0 +1,39 @@
+<div class="page-container">
+  <h1>Upravljanje recenzijama</h1>
+
+  @if (successMessage()) {
+    <div class="success-message">{{ successMessage() }}</div>
+  }
+
+  <div class="list">
+    @for (r of recenzije(); track r.id) {
+      <div class="card">
+        <div class="item-header">
+          <span class="stars">{{ getStars(r.ocjena) }}</span>
+          <span class="item-date">{{ r.createdAt | date:'dd.MM.yyyy.' }}</span>
+        </div>
+        <div class="item-user">{{ r.korisnik?.ime }} {{ r.korisnik?.prezime }} ({{ r.korisnik?.email }})</div>
+        @if (r.komentar) {
+          <p class="item-comment">{{ r.komentar }}</p>
+        }
+        @if (r.odgovor && respondingId() !== r.id) {
+          <div class="item-response"><strong>Odgovor:</strong> {{ r.odgovor }}</div>
+        }
+
+        @if (respondingId() === r.id) {
+          <div class="respond-form">
+            <textarea [(ngModel)]="odgovorText" rows="3" placeholder="Unesite odgovor..."></textarea>
+            <div class="respond-actions">
+              <button class="btn save" (click)="submitResponse(r.id)">Spremi</button>
+              <button class="btn cancel" (click)="cancelRespond()">Odustani</button>
+            </div>
+          </div>
+        } @else {
+          <button class="btn respond" (click)="startRespond(r)">{{ r.odgovor ? 'Uredi odgovor' : 'Odgovori' }}</button>
+        }
+      </div>
+    } @empty {
+      <div class="empty">Nema recenzija</div>
+    }
+  </div>
+</div>

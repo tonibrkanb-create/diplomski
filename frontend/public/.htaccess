@@ -1,0 +1,5 @@
+Options -MultiViews
+RewriteEngine On
+RewriteBase /testApp/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ /testApp/index.csr.html [L]

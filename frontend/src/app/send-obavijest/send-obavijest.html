@@ -1,0 +1,34 @@
+<div class="page-container">
+  <h1>Pošalji obavijest</h1>
+
+  @if (successMessage()) {
+    <div class="success-message">{{ successMessage() }}</div>
+  }
+  @if (errorMessage()) {
+    <div class="error-message">{{ errorMessage() }}</div>
+  }
+
+  <div class="card">
+    <div class="form-group">
+      <label>Korisnik</label>
+      <select [(ngModel)]="selectedKorisnikId">
+        <option [ngValue]="null" disabled>-- Odaberi korisnika --</option>
+        @for (k of korisnici(); track k.id) {
+          <option [ngValue]="k.id">{{ k.ime }} {{ k.prezime }} ({{ k.email }})</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Naslov</label>
+      <input type="text" [(ngModel)]="naslov" placeholder="Naslov obavijesti" />
+    </div>
+
+    <div class="form-group">
+      <label>Poruka</label>
+      <textarea [(ngModel)]="poruka" rows="5" placeholder="Tekst obavijesti..."></textarea>
+    </div>
+
+    <button class="btn send" (click)="send()">Pošalji</button>
+  </div>
+</div>

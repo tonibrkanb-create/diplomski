@@ -1,0 +1,13 @@
+.page-container { min-height: 100vh; background: #f9f7fd; padding: 24px; }
+h1 { font-size: 22px; color: #333; margin: 0 0 20px 0; }
+h2 { font-size: 17px; color: #333; margin: 0 0 12px 0; }
+.stat-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; margin-bottom: 28px; }
+.stat-card { background: #fff; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.stat-value { font-size: 28px; font-weight: 700; color: #7c3aed; }
+.stat-label { font-size: 13px; color: #777; margin-top: 4px; }
+.section { margin-bottom: 28px; }
+.card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { text-align: left; padding: 10px 12px; border-bottom: 2px solid #eee; color: #666; font-weight: 600; }
+td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; }
+tfoot td { border-top: 2px solid #eee; padding-top: 12px; }

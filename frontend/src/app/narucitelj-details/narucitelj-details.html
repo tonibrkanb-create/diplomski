@@ -1,0 +1,67 @@
+<div class="details-container">
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+  
+  <div *ngIf="loading" class="loading">Učitavanje...</div>
+  
+  <div *ngIf="narucitelj" class="narucitelj-details">
+    <div class="info-panel">
+      <div class="photo">
+        <img src="/assets/avatar-placeholder.png" alt="Fotografija naručitelja {{narucitelj.name}}" />
+      </div>
+      <div class="client-info">
+        <div class="client-header">
+          <h2>{{ narucitelj.name }}</h2>
+          <button type="button" class="edit-btn" (click)="openUpdateModal()">✏️ Uredi</button>
+        </div>
+        <p><strong>ID:</strong> <span>{{ narucitelj.id }}</span></p>
+        <p><strong>Adresa:</strong> <span>{{ narucitelj.adresa }}</span></p>
+        <p><strong>Mjesto:</strong> <span>{{ narucitelj.mjesto }}</span></p>
+        <p><strong>Poštanski broj:</strong> <span>{{ narucitelj.postanskiBroj }}</span></p>
+        <p><strong>Država:</strong> <span>{{ narucitelj.drzava }}</span></p>
+        <p><strong>OIB:</strong> <span>{{ narucitelj.OIB }}</span></p>
+        <p><strong>Žiro račun:</strong> <span>{{ narucitelj.ziroRacun }}</span></p>
+        <p><strong>Kontakt osoba:</strong> <span>{{ narucitelj.kontaktOsoba }}</span></p>
+        <p><strong>Telefon:</strong> <span>{{ narucitelj.telefon }}</span></p>
+        <p><strong>Mobitel:</strong> <span>{{ narucitelj.mobitel }}</span></p>
+        <p><strong>Fax:</strong> <span>{{ narucitelj.fax }}</span></p>
+        <p><strong>Email:</strong> <span>{{ narucitelj.email }}</span></p>
+        <p><strong>Ostalo:</strong> <span>{{ narucitelj.ostalo }}</span></p>
+      </div>
+    </div>
+
+    <div class="history-panel">
+    <h3>Povijest radnih naloga</h3>
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Broj naloga</th>
+          <th>Datum</th>
+          <th>Objekt</th>
+          <th>Fakturirano</th>
+          <th>Završeno</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let h of history" (click)="navigateToDetails(h.id)" class="clickable-row">
+          <td>{{ h.brojNaloga }}</td>
+          <td>{{ h.datum | date:'short' }}</td>
+          <td>{{ h.objekt }}</td>
+          <td><input type="checkbox" [checked]="h.fakturirano" disabled /></td>
+          <td><input type="checkbox" [checked]="h.zavrseno" disabled /></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="update-modal-backdrop" *ngIf="showUpdateModal" (click)="closeUpdateModal()">
+    <div class="update-modal-content" (click)="$event.stopPropagation()">
+      <div class="update-modal-header">
+        <h2>Uredi naručitelja</h2>
+        <button type="button" class="icon-btn" (click)="closeUpdateModal()">✖</button>
+      </div>
+      <iframe *ngIf="updateModalUrl" [src]="updateModalUrl" class="update-modal-frame" title="Uredi naručitelja"></iframe>
+    </div>
+  </div>
+</div>

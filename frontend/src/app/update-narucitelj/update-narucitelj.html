@@ -1,0 +1,91 @@
+<div class="form-container">
+  <h2>Uredi Naručitelja</h2>
+
+  <div *ngIf="loading" class="status-message">Učitavanje...</div>
+  <div *ngIf="error" class="error-banner">{{ error }}</div>
+  <div *ngIf="success" class="success-banner">Naručitelj je uspješno ažuriran.</div>
+
+  <form [formGroup]="naruciteljForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">Naručitelj:</label>
+      <input type="text" id="name" formControlName="name" required>
+      <div *ngIf="naruciteljForm.get('name')?.invalid && naruciteljForm.get('name')?.touched" class="error">
+        Naručitelj je obavezan.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="adresa">Adresa:</label>
+      <input type="text" id="adresa" formControlName="adresa" required>
+      <div *ngIf="naruciteljForm.get('adresa')?.invalid && naruciteljForm.get('adresa')?.touched" class="error">
+        Adresa je obavezna.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="mjesto">Mjesto:</label>
+      <input type="text" id="mjesto" formControlName="mjesto" required>
+      <div *ngIf="naruciteljForm.get('mjesto')?.invalid && naruciteljForm.get('mjesto')?.touched" class="error">
+        Mjesto je obavezno.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="postanskiBroj">Poštanski broj:</label>
+      <input type="text" id="postanskiBroj" formControlName="postanskiBroj">
+    </div>
+
+    <div class="form-group">
+      <label for="drzava">Država:</label>
+      <input type="text" id="drzava" formControlName="drzava">
+    </div>
+
+    <div class="form-group">
+      <label for="OIB">OIB:</label>
+      <input type="text" id="OIB" formControlName="OIB">
+    </div>
+
+    <div class="form-group">
+      <label for="ziroRacun">Žiro račun:</label>
+      <input type="text" id="ziroRacun" formControlName="ziroRacun">
+    </div>
+
+    <div class="form-group">
+      <label for="ostalo">Ostalo:</label>
+      <textarea id="ostalo" formControlName="ostalo"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="kontaktOsoba">Kontakt osoba:</label>
+      <input type="text" id="kontaktOsoba" formControlName="kontaktOsoba">
+    </div>
+
+    <div class="form-group">
+      <label for="telefon">Telefon:</label>
+      <input type="text" id="telefon" formControlName="telefon">
+    </div>
+
+    <div class="form-group">
+      <label for="mobitel">Mobitel:</label>
+      <input type="text" id="mobitel" formControlName="mobitel">
+    </div>
+
+    <div class="form-group">
+      <label for="fax">Fax:</label>
+      <input type="text" id="fax" formControlName="fax">
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" formControlName="email">
+      <div *ngIf="naruciteljForm.get('email')?.invalid && naruciteljForm.get('email')?.touched" class="error">
+        Unesite ispravnu e-mail adresu.
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="submit" [disabled]="naruciteljForm.invalid || saving || loading">{{ saving ? 'Spremanje...' : 'Spremi promjene' }}</button>
+      <button type="button" class="secondary" (click)="cancel()">Odustani</button>
+    </div>
+  </form>
+</div>

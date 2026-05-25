@@ -1,0 +1,132 @@
+<div class="details-container">
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+    
+  <div *ngIf="nalog" class="nalog-details">
+    <div class="details-header">
+      <h2>Radni nalog {{ nalog.brojNaloga }}</h2>
+      <div class="details-header-actions">
+        <button type="button" class="edit-btn" (click)="downloadPdf()">📄 Preuzmi PDF</button>
+        <button type="button" class="edit-btn" (click)="openUpdateModal()">✏️ Uredi</button>
+      </div>
+    </div>
+    <p><strong>Naručitelj:</strong> <span>{{ nalog.narucitelj?.name || nalog.narucitelj }}</span></p>
+    <p><strong>Datum:</strong> <span>{{ nalog.datum | date:'short' }}</span></p>
+    <p><strong>Broj ponude:</strong> <span>{{ nalog.brojPonude || '-' }}</span></p>
+    <p><strong>Broj računa:</strong> <span>{{ nalog.brojRacuna || '-' }}</span></p>
+    <p><strong>Narudžbenica:</strong> <span>{{ nalog.narudzbenica || '-' }}</span></p>
+    <p><strong>Ugovor:</strong> <span>{{ nalog.ugovor || '-' }}</span></p>
+    <p><strong>Objekt:</strong> <span>{{ nalog.objekt }}</span></p>
+    <p><strong>Opis:</strong> <span>{{ nalog.opis }}</span></p>
+    <p><strong>Aktivnosti:</strong> <span>{{ renderAktivnosti(nalog.aktivnosti) || '-' }}</span></p>
+    <p><strong>Fakturirano:</strong> <input type="checkbox" [checked]="nalog.fakturirano" disabled /></p>
+    <p><strong>Završeno:</strong> <input type="checkbox" [checked]="nalog.zavrseno" disabled /></p>
+
+    <div class="assign-section">
+      <p><strong>Dodijeljeni djelatnik:</strong>
+        <span *ngIf="nalog.assignedUser">{{ nalog.assignedUser.ime }} {{ nalog.assignedUser.prezime }} ({{ nalog.assignedUser.username }})</span>
+        <span *ngIf="!nalog.assignedUser">-</span>
+      </p>
+      <div class="assign-form">
+        <select [(ngModel)]="selectedUserId">
+          <option [ngValue]="null">-- Bez dodjele --</option>
+          <option *ngFor="let u of users" [ngValue]="u.id">{{ u.ime || '' }} {{ u.prezime || '' }} ({{ u.username }})</option>
+        </select>
+        <button type="button" class="assign-btn" (click)="assignWorker()">Dodijeli</button>
+      </div>
+    </div>
+
+    <div class="attachments">
+      <h3>Priloženi dokumenti</h3>
+      <div class="attach-actions">
+        <input #documentInput type="file" class="hidden-file-input" (change)="onDocumentSelected($event)" />
+        <button type="button" (click)="openAttachDialog(documentInput)" [disabled]="uploadingDocument">
+          {{ uploadingDocument ? 'Prilažem...' : '➕ Priloži dokument' }}
+        </button>
+      </div>
+      <div *ngIf="showAttachDialog" class="attach-choice-overlay" (click)="cancelAttachDialog()">
+        <div class="attach-choice-panel" (click)="$event.stopPropagation()">
+          <h3>Dodaj dokument</h3>
+          <p>Odaberi želite li prenijeti lokalnu datoteku ili unijeti naziv i URL.</p>
+          <div *ngIf="attachDialogMode === 'choice'" class="attach-choice-buttons">
+            <button type="button" (click)="beginLocalAttachment()">Prenesi lokalnu datoteku</button>
+            <button type="button" (click)="openUrlAttachForm()">Unesi naziv i URL</button>
+          </div>
+          <div *ngIf="attachDialogMode === 'url'" class="attach-url-form">
+            <div class="form-row">
+              <label>Naziv dokumenta:<br />
+                <input [(ngModel)]="attachmentName" placeholder="Npr. ugovor.pdf" />
+              </label>
+            </div>
+            <div class="form-row">
+              <label>URL dokumenta:<br />
+                <input [(ngModel)]="attachmentUrl" placeholder="https://..." />
+              </label>
+            </div>
+            <div class="attach-url-actions">
+              <button type="button" (click)="submitUrlAttachment()" [disabled]="uploadingDocument">
+                {{ uploadingDocument ? 'Dodajem...' : 'Dodaj iz URL-a' }}
+              </button>
+              <button type="button" class="cancel-btn" (click)="cancelAttachDialog()">Odustani</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="documentError" class="error-message">
+        {{ documentError }}
+      </div>
+      <ul>
+        <li *ngFor="let doc of documents">
+          <div class="document-row">
+            <a href="#" (click)="downloadDocument($event, doc)">{{ doc.name }}</a>
+            <button
+              type="button"
+              class="delete-document-btn"
+              (click)="openDeleteDocumentModal($event, doc)"
+              aria-label="Obriši dokument"
+            >
+              ×
+            </button>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="notes">
+      <h3>Bilješke</h3>
+      <ul>
+        <li *ngFor="let note of notes"><strong>{{ note.date | date:'short' }}:</strong> {{ note.text }}</li>
+      </ul>
+      <div class="note-input">
+        <textarea [(ngModel)]="newNote" placeholder="Dodaj bilješku..."></textarea>
+        <button (click)="addNote()">➕ Dodaj bilješku</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="update-modal-backdrop" *ngIf="showUpdateModal" (click)="closeUpdateModal()">
+    <div class="update-modal-content" (click)="$event.stopPropagation()">
+      <div class="update-modal-header">
+        <h2>Uredi radni nalog</h2>
+        <button type="button" class="icon-btn" (click)="closeUpdateModal()">✖</button>
+      </div>
+      <iframe *ngIf="updateModalUrl" [src]="updateModalUrl" class="update-modal-frame" title="Uredi radni nalog"></iframe>
+    </div>
+  </div>
+
+  <div *ngIf="showDeleteDocumentModal" class="modal-overlay" (click)="closeDeleteDocumentModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <p>
+        Jeste li sigurni da želite obrisati {{ documentToDelete?.name }}
+      </p>
+      <div class="modal-actions">
+        <button type="button" class="cancel-btn" (click)="closeDeleteDocumentModal()" [disabled]="deletingDocument">
+          Ne
+        </button>
+        <button type="button" class="confirm-btn" (click)="confirmDeleteDocument()" [disabled]="deletingDocument">
+          {{ deletingDocument ? 'Brišem...' : 'Da' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,86 @@
+<div class="radni-nalozi-grid">
+  <h1>Radni Nalozi</h1>
+  
+  <div class="toolbar">
+    <select [(ngModel)]="searchField" (ngModelChange)="setPage(1)" class="search-field-select">
+      <option *ngFor="let field of searchableFields" [value]="field.value">{{ field.label }}</option>
+    </select>
+    <input type="text" placeholder="Unesite pojam za pretragu..." [(ngModel)]="searchTerm" (ngModelChange)="setPage(1)" class="search-input" />
+    <div class="toolbar-actions">
+      <button type="button" class="icon-btn" title="Dodaj" (click)="openAddModal()">➕</button>
+      <button type="button" class="icon-btn" title="Uredi označeno" [disabled]="selectedCount !== 1" (click)="editSelected()">✏️</button>
+      <button type="button" class="icon-btn delete" title="Obriši označeno" [disabled]="selectedCount === 0" (click)="deleteSelected()">🗑️</button>
+    </div>
+  </div>
+
+  <div class="table-scroll">
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th><input type="checkbox" [checked]="isAllSelected()" (change)="toggleSelectAll($event.target.checked)" /></th>
+          <th class="sortable" (click)="toggleSort('brojNaloga')">#<span class="sort-indicator">{{ getSortArrow('brojNaloga') }}</span></th>
+          <th class="sortable" (click)="toggleSort('narucitelj')">Naručitelj<span class="sort-indicator">{{ getSortArrow('narucitelj') }}</span></th>
+          <th class="sortable" (click)="toggleSort('datum')">Datum<span class="sort-indicator">{{ getSortArrow('datum') }}</span></th>
+          <th class="sortable" (click)="toggleSort('objekt')">Objekt<span class="sort-indicator">{{ getSortArrow('objekt') }}</span></th>
+          <th class="sortable" (click)="toggleSort('aktivnosti')">Aktivnosti<span class="sort-indicator">{{ getSortArrow('aktivnosti') }}</span></th>
+          <th>Djelatnik</th>
+          <th class="sortable" (click)="toggleSort('fakturirano')">Fakturirano<span class="sort-indicator">{{ getSortArrow('fakturirano') }}</span></th>
+          <th class="sortable" (click)="toggleSort('zavrseno')">Završeno<span class="sort-indicator">{{ getSortArrow('zavrseno') }}</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let nalog of paged" class="clickable-row" (click)="navigateToDetails(nalog)">
+          <td>
+            <input
+              type="checkbox"
+              [checked]="getRouteId(nalog) && selectedIds.has(getRouteId(nalog)!)"
+              [disabled]="!getRouteId(nalog)"
+              (click)="$event.stopPropagation()"
+              (change)="toggleSelect(getRouteId(nalog))"
+            />
+          </td>
+          <td>
+            {{ nalog.brojNaloga }}
+          </td>
+          <td class="client-cell">
+            <div class="avatar">{{ nalog.narucitelj ? nalog.narucitelj.name.charAt(0) : nalog.narucitelj_id }}</div>
+            {{ nalog.narucitelj?.name || nalog.narucitelj_id }}
+          </td>
+          <td>{{ nalog.datum }}</td>
+          <td>{{ nalog.objekt }}</td>
+          <td>{{ renderAktivnosti(nalog.aktivnosti) || '-' }}</td>
+          <td>{{ nalog.assignedUser ? (nalog.assignedUser.ime || '') + ' ' + (nalog.assignedUser.prezime || '') : '-' }}</td>
+          <td><input type="checkbox" [checked]="nalog.fakturirano" disabled /></td>
+          <td><input type="checkbox" [checked]="nalog.zavrseno" disabled /></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
+    <button (click)="changePage(-1)" [disabled]="currentPage===1">Prethodna</button>
+    <select [(ngModel)]="currentPage" (ngModelChange)="setPage($event)" class="page-select">
+      <option *ngFor="let page of getPageNumbers()" [value]="page">Stranica {{ page }} od {{ maxPage }}</option>
+    </select>
+    <button (click)="changePage(1)" [disabled]="currentPage>=maxPage">Sljedeća</button>
+  </div>
+
+  <div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ modalTitle }}</h2>
+        <button type="button" class="icon-btn" (click)="closeModal()">✖</button>
+      </div>
+      <iframe *ngIf="modalUrl" [src]="modalUrl" class="modal-frame" title="Obrazac unosa"></iframe>
+    </div>
+  </div>
+
+  <app-confirm-delete-popup
+    *ngIf="showDeleteModal"
+    [title]="'Obriši radni nalog'"
+    [message]="deleteModalMessage"
+    [loading]="deleting"
+    (confirm)="confirmDeleteModal()"
+    (cancel)="closeDeleteModal()"
+  ></app-confirm-delete-popup>
+</div>

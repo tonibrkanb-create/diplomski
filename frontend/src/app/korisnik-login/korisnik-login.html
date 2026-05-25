@@ -1,0 +1,23 @@
+<div class="login-container">
+  <div class="login-body">
+    <div class="login-info">
+      <h1>Korisnički portal</h1>
+      <p>Prijavite se za pristup svom korisničkom portalu. Ovdje možete pratiti svoje zahtjeve, obavijesti i ostaviti recenziju.</p>
+      <p>Nemate račun? <a routerLink="/korisnik/registracija">Registrirajte se</a></p>
+    </div>
+    <div class="login-form-wrapper">
+      <div class="login-box">
+        <div class="form-group">
+          <input type="email" [(ngModel)]="email" placeholder="Email" (keyup.enter)="onLogin()" />
+        </div>
+        <div class="form-group">
+          <input type="password" [(ngModel)]="password" placeholder="Lozinka" (keyup.enter)="onLogin()" />
+        </div>
+        @if (errorMessage()) {
+          <div class="error-message">{{ errorMessage() }}</div>
+        }
+        <button class="login-button" (click)="onLogin()">Prijava</button>
+      </div>
+    </div>
+  </div>
+</div>

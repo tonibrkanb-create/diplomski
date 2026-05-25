@@ -1,0 +1,62 @@
+<div class="page-container">
+  <div class="page-header">
+    <a routerLink="/korisnik/dashboard" class="back-link">&larr; Natrag</a>
+    <div class="header-row">
+      <h1>Moje recenzije</h1>
+      <button class="add-btn" (click)="toggleForm()">
+        {{ showForm() ? 'Odustani' : '+ Nova recenzija' }}
+      </button>
+    </div>
+  </div>
+
+  @if (showForm()) {
+    <div class="card form-card">
+      <h2>Nova recenzija</h2>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>Ocjena (1-5) *</label>
+          <div class="star-input">
+            @for (star of [1, 2, 3, 4, 5]; track star) {
+              <button type="button" class="star-btn" [class.active]="star <= form.get('ocjena')?.value" (click)="form.get('ocjena')?.setValue(star)">
+                &#9733;
+              </button>
+            }
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Komentar</label>
+          <textarea formControlName="komentar" rows="4" placeholder="Napišite svoj dojam o usluzi..."></textarea>
+        </div>
+        @if (errorMessage()) {
+          <div class="error-message">{{ errorMessage() }}</div>
+        }
+        <button type="submit" class="submit-button">Objavi recenziju</button>
+      </form>
+    </div>
+  }
+
+  @if (successMessage()) {
+    <div class="success-message">{{ successMessage() }}</div>
+  }
+
+  <div class="list">
+    @for (recenzija of recenzije(); track recenzija.id) {
+      <div class="card list-item">
+        <div class="item-header">
+          <span class="stars">{{ getStars(recenzija.ocjena) }}</span>
+          <span class="item-date">{{ recenzija.createdAt | date:'dd.MM.yyyy.' }}</span>
+        </div>
+        @if (recenzija.komentar) {
+          <p class="item-comment">{{ recenzija.komentar }}</p>
+        }
+        @if (recenzija.odgovor) {
+          <div class="item-response">
+            <strong>Odgovor:</strong> {{ recenzija.odgovor }}
+          </div>
+        }
+      </div>
+    } @empty {
+      <div class="empty-state">Nemate recenzija</div>
+    }
+  </div>
+</div>

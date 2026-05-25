@@ -1,0 +1,67 @@
+<div class="app-shell">
+	@if (!isEmbedded() && !isKorisnikRoute()) {
+		<header class="app-header">
+			<div class="app-header-inner">
+				<a routerLink="/" class="brand">{{ title() }}</a>
+				<nav class="main-nav" aria-label="Glavna navigacija">
+					@if (isAuthenticated()) {
+						<a routerLink="/radniNalozi" routerLinkActive="active">Radni Nalozi</a>
+						<a routerLink="/narucitelji" routerLinkActive="active">Naručitelji</a>
+						<a routerLink="/uskoroistice" routerLinkActive="active" class="nav-with-badge">
+							<span>Uskoro Ističe</span>
+							@if (uskoroIsticeCount() > 0) {
+								<span class="counter-badge">{{ uskoroIsticeCount() }}</span>
+							}
+						</a>
+						<a routerLink="/users" routerLinkActive="active">Korisnici</a>
+						<a routerLink="/statistics" routerLinkActive="active">Statistika</a>
+						<a routerLink="/ponude-management" routerLinkActive="active">Ponude</a>
+						<a routerLink="/recenzije-management" routerLinkActive="active">Recenzije</a>
+						<a routerLink="/send-obavijest" routerLinkActive="active">Obavijesti</a>
+						<a routerLink="/reports" routerLinkActive="active">Izvještaji</a>
+						<a routerLink="/logovi" routerLinkActive="active">Logovi</a>
+						<a routerLink="/my-tasks" routerLinkActive="active">Moji zadaci</a>
+						<a routerLink="/postavke" routerLinkActive="active">Postavke</a>
+						<button type="button" class="logout-button" (click)="logout()">Odjava</button>
+					} @else {
+						<a routerLink="/login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Prijava</a>
+					}
+				</nav>
+			</div>
+		</header>
+	}
+
+
+		@if (errorBannerOpen()) {
+			<app-error-banner [error]="errorBannerMessage()" />
+		}
+
+		<main class="app-main">
+			<router-outlet />
+		</main>
+
+	@if (!isEmbedded()) {
+		<footer class="app-footer">
+			<div class="app-footer-inner">
+				<span>{{ title() }}</span>
+				<span>© {{ year }}</span>
+			</div>
+		</footer>
+	}
+
+	@if (successModalOpen()) {
+		<div class="success-modal-overlay" (click)="closeSuccessModal()">
+			<div class="success-modal" (click)="$event.stopPropagation()">
+				<p>
+					<span style="font-size:1.6rem;line-height:1;vertical-align:middle;">
+						{{ getSuccessModalIcon() }}
+					</span>
+					{{ successModalMessage() }}
+				</p>
+				<div class="success-modal-actions">
+					<button type="button" (click)="closeSuccessModal()">U redu</button>
+				</div>
+			</div>
+		</div>
+	}
+</div>

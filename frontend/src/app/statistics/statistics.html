@@ -1,0 +1,67 @@
+<div class="page-container">
+  <h1>Statistika</h1>
+
+  @if (stats()) {
+    <div class="stat-cards">
+      <div class="stat-card"><div class="stat-value">{{ stats()!.totalNalozi }}</div><div class="stat-label">Ukupno naloga</div></div>
+      <div class="stat-card"><div class="stat-value">{{ stats()!.totalNarucitelji }}</div><div class="stat-label">Naručitelji</div></div>
+      <div class="stat-card"><div class="stat-value">{{ stats()!.zavrseno }}</div><div class="stat-label">Završeno</div></div>
+      <div class="stat-card"><div class="stat-value">{{ stats()!.uTijeku }}</div><div class="stat-label">U tijeku</div></div>
+      <div class="stat-card"><div class="stat-value">{{ stats()!.fakturirano }}</div><div class="stat-label">Fakturirano</div></div>
+      <div class="stat-card"><div class="stat-value">{{ stats()!.nefakturirano }}</div><div class="stat-label">Nefakturirano</div></div>
+    </div>
+  }
+
+  <div class="section">
+    <h2>Prihod po aktivnosti</h2>
+    <div class="card">
+      <table>
+        <thead><tr><th>Aktivnost</th><th>Cijena</th><th>Broj naloga</th><th>Ukupno</th></tr></thead>
+        <tbody>
+          @for (item of revenue(); track item.id) {
+            <tr>
+              <td>{{ item.aktivnost }}</td>
+              <td>{{ item.cijena | number:'1.2-2' }} EUR</td>
+              <td>{{ item.count }}</td>
+              <td><strong>{{ item.ukupno | number:'1.2-2' }} EUR</strong></td>
+            </tr>
+          }
+        </tbody>
+        <tfoot><tr><td colspan="3"><strong>Ukupno</strong></td><td><strong>{{ totalRevenue() | number:'1.2-2' }} EUR</strong></td></tr></tfoot>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Učinak po radniku</h2>
+    <div class="card">
+      <table>
+        <thead><tr><th>Radnik</th><th>Ukupno naloga</th><th>Završeno</th><th>Fakturirano</th></tr></thead>
+        <tbody>
+          @for (item of performance(); track item.id) {
+            <tr>
+              <td>{{ item.ime || '' }} {{ item.prezime || '' }} ({{ item.username }})</td>
+              <td>{{ item.total }}</td>
+              <td>{{ item.zavrseno }}</td>
+              <td>{{ item.fakturirano }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Izdano po mjesecu</h2>
+    <div class="card">
+      <table>
+        <thead><tr><th>Mjesec</th><th>Broj naloga</th></tr></thead>
+        <tbody>
+          @for (item of monthly(); track item.month) {
+            <tr><td>{{ item.month }}</td><td>{{ item.count }}</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

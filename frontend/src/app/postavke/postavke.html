@@ -1,0 +1,82 @@
+<div class="postavke-grid">
+  <h1>Postavke</h1>
+
+  <div class="tab-header">
+    <button type="button" class="tab-btn" [class.active]="activeTab === 'aktivnosti'" (click)="setTab('aktivnosti')">
+      Aktivnosti
+    </button>
+    <button type="button" class="tab-btn" [class.active]="activeTab === 'register'" (click)="setTab('register')">
+      Registriraj korisnika
+    </button>
+  </div>
+
+  <section *ngIf="activeTab === 'aktivnosti'">
+    <div class="toolbar">
+      <div class="toolbar-actions">
+        <button type="button" class="icon-btn" title="Dodaj" (click)="openAddModal()">➕</button>
+        <button type="button" class="icon-btn" title="Uredi označeno" [disabled]="selectedCount !== 1" (click)="editSelected()">✏️</button>
+        <button type="button" class="icon-btn delete" title="Obriši označeno" [disabled]="selectedCount === 0" (click)="deleteSelected()">🗑️</button>
+      </div>
+    </div>
+
+    <p *ngIf="loading">Učitavanje...</p>
+    <p class="error" *ngIf="error">{{ error }}</p>
+
+    <div class="table-scroll" *ngIf="!loading">
+      <table class="styled-table" *ngIf="aktivnosti.length > 0; else noData">
+        <thead>
+          <tr>
+            <th><input type="checkbox" [checked]="isAllSelected()" (change)="toggleSelectAll($event.target.checked)" /></th>
+            <th>#</th>
+            <th>Naziv</th>
+            <th>Trajanje Mjeseci</th>
+            <th>Aktivna</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of aktivnosti">
+            <td>
+              <input
+                type="checkbox"
+                [checked]="item.id && selectedIds.has(item.id)"
+                [disabled]="!item.id"
+                (change)="toggleSelect(item.id)"
+              />
+            </td>
+            <td>{{ item.id }}</td>
+            <td>{{ item.naziv }}</td>
+            <td>{{ item.trajanje }}</td>
+            <td><input type="checkbox" [checked]="item.isActive" disabled /></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #noData>
+      <p>Nema aktivnosti.</p>
+    </ng-template>
+  </section>
+
+  <section *ngIf="activeTab === 'register'" class="register-user-section">
+    <app-register-user-form (userRegistered)="onUserRegistered()"></app-register-user-form>
+  </section>
+
+  <div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ modalTitle }}</h2>
+        <button type="button" class="icon-btn" (click)="closeModal(false)">✖</button>
+      </div>
+      <iframe *ngIf="modalUrl" [src]="modalUrl" class="modal-frame" title="Obrazac aktivnosti"></iframe>
+    </div>
+  </div>
+
+  <app-confirm-delete-popup
+    *ngIf="showDeleteModal"
+    [title]="'Obriši aktivnost'"
+    [message]="deleteModalMessage"
+    [loading]="deleting"
+    (confirm)="confirmDeleteModal()"
+    (cancel)="closeDeleteModal()"
+  ></app-confirm-delete-popup>
+</div>

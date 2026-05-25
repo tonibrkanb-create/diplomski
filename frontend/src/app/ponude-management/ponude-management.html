@@ -1,0 +1,52 @@
+<div class="page-container">
+  <h1>Upravljanje ponudama</h1>
+
+  @if (successMessage()) {
+    <div class="success-message">{{ successMessage() }}</div>
+  }
+
+  @if (selectedPonuda(); as ponuda) {
+    <div class="card detail-card">
+      <h2>Ponuda #{{ ponuda.id }}</h2>
+      <div class="detail-row"><strong>Korisnik:</strong> {{ ponuda.korisnik?.ime }} {{ ponuda.korisnik?.prezime }} ({{ ponuda.korisnik?.email }})</div>
+      <div class="detail-row"><strong>Tvrtka:</strong> {{ ponuda.korisnik?.tvrtka || '-' }}</div>
+      <div class="detail-row"><strong>Opis:</strong> {{ ponuda.opis }}</div>
+      <div class="detail-row"><strong>Vrsta atesta:</strong> {{ ponuda.vrstaAtesta || '-' }}</div>
+      <div class="detail-row"><strong>Lokacija:</strong> {{ ponuda.lokacija || '-' }}</div>
+      <div class="detail-row"><strong>Željeni datum:</strong> {{ ponuda.zeljeniDatum || '-' }}</div>
+      <div class="detail-row"><strong>Status:</strong> <span class="status-badge status-{{ ponuda.status }}">{{ getStatusLabel(ponuda.status) }}</span></div>
+
+      <div class="form-group">
+        <label>Odgovor / ponuda:</label>
+        <textarea [(ngModel)]="odgovorText" rows="4" placeholder="Unesite tekst ponude ili odgovor..."></textarea>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn approve" (click)="updateStatus('odobrena')">Odobri</button>
+        <button class="btn send" (click)="updateStatus('poslana')">Pošalji ponudu</button>
+        <button class="btn reject" (click)="updateStatus('odbijena')">Odbij</button>
+        <button class="btn cancel" (click)="close()">Zatvori</button>
+      </div>
+    </div>
+  }
+
+  <div class="card">
+    <table>
+      <thead><tr><th>ID</th><th>Korisnik</th><th>Opis</th><th>Vrsta</th><th>Status</th><th>Datum</th></tr></thead>
+      <tbody>
+        @for (ponuda of ponude(); track ponuda.id) {
+          <tr (click)="select(ponuda)" class="clickable">
+            <td>{{ ponuda.id }}</td>
+            <td>{{ ponuda.korisnik?.ime }} {{ ponuda.korisnik?.prezime }}</td>
+            <td class="truncate">{{ ponuda.opis }}</td>
+            <td>{{ ponuda.vrstaAtesta || '-' }}</td>
+            <td><span class="status-badge status-{{ ponuda.status }}">{{ getStatusLabel(ponuda.status) }}</span></td>
+            <td>{{ ponuda.createdAt | date:'dd.MM.yyyy.' }}</td>
+          </tr>
+        } @empty {
+          <tr><td colspan="6" class="empty">Nema zahtjeva</td></tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

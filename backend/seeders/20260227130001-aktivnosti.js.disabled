@@ -1,0 +1,40 @@
+'use strict';
+
+module.exports = {
+  async up(queryInterface) {
+    await queryInterface.bulkInsert('aktivnosti', [
+      {
+        aktivnost: 'Zastita Na Radu',
+        rokTrajanja: 12,
+        isActive: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        aktivnost: 'Zastita Od Pozara',
+        rokTrajanja: 12,
+        isActive: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        aktivnost: 'Zastita Okolisa',
+        rokTrajanja: 24,
+        isActive: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        aktivnost: 'Ostala Mjerenja',
+        rokTrajanja: 6,
+        isActive: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    ]);
+  },
+
+  async down(queryInterface) {
+    await queryInterface.bulkDelete('aktivnosti', null, {});
+  }
+};

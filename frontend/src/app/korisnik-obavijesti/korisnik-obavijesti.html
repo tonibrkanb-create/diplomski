@@ -1,0 +1,23 @@
+<div class="page-container">
+  <div class="page-header">
+    <a routerLink="/korisnik/dashboard" class="back-link">&larr; Natrag</a>
+    <h1>Obavijesti</h1>
+  </div>
+
+  <div class="list">
+    @for (obavijest of obavijesti(); track obavijest.id) {
+      <div class="card list-item" [class.unread]="!obavijest.procitana">
+        <div class="item-header">
+          <h3>{{ obavijest.naslov }}</h3>
+          <span class="item-date">{{ obavijest.createdAt | date:'dd.MM.yyyy. HH:mm' }}</span>
+        </div>
+        <p class="item-message">{{ obavijest.poruka }}</p>
+        @if (!obavijest.procitana) {
+          <button class="mark-read-btn" (click)="markAsRead(obavijest.id)">Označi kao pročitano</button>
+        }
+      </div>
+    } @empty {
+      <div class="empty-state">Nemate obavijesti</div>
+    }
+  </div>
+</div>

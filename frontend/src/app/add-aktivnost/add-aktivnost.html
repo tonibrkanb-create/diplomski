@@ -1,0 +1,24 @@
+<div class="aktivnost-form-container">
+  <h1>Dodaj Aktivnost</h1>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <label for="naziv">Naziv</label>
+    <input id="naziv" type="text" formControlName="naziv" />
+
+    <label for="trajanje">Trajanje</label>
+    <input id="trajanje" type="number" min="0" formControlName="trajanje" />
+
+    <label for="cijena">Cijena (EUR)</label>
+    <input id="cijena" type="number" min="0" step="0.01" formControlName="cijena" />
+
+    <label class="check-label" for="isActive">
+      <input id="isActive" type="checkbox" formControlName="isActive" />
+      Aktivna
+    </label>
+
+    <button type="submit" [disabled]="loading">Dodaj</button>
+
+    <p class="success" *ngIf="success">Aktivnost uspješno dodana.</p>
+    <p class="error" *ngIf="error">{{ error }}</p>
+  </form>
+</div>

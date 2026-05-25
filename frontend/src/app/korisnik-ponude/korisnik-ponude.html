@@ -1,0 +1,70 @@
+<div class="page-container">
+  <div class="page-header">
+    <a routerLink="/korisnik/dashboard" class="back-link">&larr; Natrag</a>
+    <div class="header-row">
+      <h1>Zahtjevi za ponude</h1>
+      <button class="add-btn" (click)="toggleForm()">
+        {{ showForm() ? 'Odustani' : '+ Novi zahtjev' }}
+      </button>
+    </div>
+  </div>
+
+  @if (showForm()) {
+    <div class="card form-card">
+      <h2>Novi zahtjev za ponudu</h2>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>Opis potrebe *</label>
+          <textarea formControlName="opis" rows="4" placeholder="Opišite što vam je potrebno..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Vrsta atesta</label>
+            <input type="text" formControlName="vrstaAtesta" placeholder="Npr. električni, protupožarni..." />
+          </div>
+          <div class="form-group">
+            <label>Lokacija</label>
+            <input type="text" formControlName="lokacija" placeholder="Adresa objekta" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Željeni datum</label>
+          <input type="date" formControlName="zeljeniDatum" />
+        </div>
+        @if (errorMessage()) {
+          <div class="error-message">{{ errorMessage() }}</div>
+        }
+        <button type="submit" class="submit-button">Pošalji zahtjev</button>
+      </form>
+    </div>
+  }
+
+  @if (successMessage()) {
+    <div class="success-message">{{ successMessage() }}</div>
+  }
+
+  <div class="list">
+    @for (ponuda of ponude(); track ponuda.id) {
+      <div class="card list-item">
+        <div class="item-header">
+          <span class="status-badge status-{{ ponuda.status }}">{{ getStatusLabel(ponuda.status) }}</span>
+          <span class="item-date">{{ ponuda.createdAt | date:'dd.MM.yyyy.' }}</span>
+        </div>
+        <p class="item-opis">{{ ponuda.opis }}</p>
+        @if (ponuda.vrstaAtesta) {
+          <div class="item-detail"><strong>Vrsta:</strong> {{ ponuda.vrstaAtesta }}</div>
+        }
+        @if (ponuda.lokacija) {
+          <div class="item-detail"><strong>Lokacija:</strong> {{ ponuda.lokacija }}</div>
+        }
+        @if (ponuda.odgovor) {
+          <div class="item-response">
+            <strong>Odgovor:</strong> {{ ponuda.odgovor }}
+          </div>
+        }
+      </div>
+    } @empty {
+      <div class="empty-state">Nemate zahtjeva za ponude</div>
+    }
+  </div>
+</div>

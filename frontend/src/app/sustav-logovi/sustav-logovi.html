@@ -1,0 +1,35 @@
+<div class="page-container">
+  <h1>Logovi sustava</h1>
+
+  <div class="card filters">
+    <div class="filter-row">
+      <input type="text" [(ngModel)]="filterEntity" placeholder="Entitet" />
+      <input type="text" [(ngModel)]="filterAction" placeholder="Akcija" />
+      <input type="date" [(ngModel)]="filterFrom" />
+      <input type="date" [(ngModel)]="filterTo" />
+      <button class="filter-btn" (click)="load()">Filtriraj</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr><th>Datum</th><th>Korisnik</th><th>Akcija</th><th>Entitet</th><th>ID</th><th>Detalji</th></tr>
+      </thead>
+      <tbody>
+        @for (log of logs(); track log.id) {
+          <tr>
+            <td>{{ log.createdAt | date:'dd.MM.yyyy. HH:mm' }}</td>
+            <td>{{ log.user?.username || '-' }}</td>
+            <td>{{ log.action }}</td>
+            <td>{{ log.entity }}</td>
+            <td>{{ log.entityId || '-' }}</td>
+            <td class="details">{{ log.details || '-' }}</td>
+          </tr>
+        } @empty {
+          <tr><td colspan="6" class="empty">Nema logova</td></tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="page-container">
+  <div class="page-header">
+    <a routerLink="/korisnik/dashboard" class="back-link">&larr; Natrag</a>
+    <h1>Moj profil</h1>
+  </div>
+
+  @if (!loading()) {
+    <div class="card">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Ime *</label>
+            <input type="text" formControlName="ime" />
+          </div>
+          <div class="form-group">
+            <label>Prezime *</label>
+            <input type="text" formControlName="prezime" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" formControlName="email" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Telefon</label>
+            <input type="text" formControlName="telefon" />
+          </div>
+          <div class="form-group">
+            <label>Tvrtka</label>
+            <input type="text" formControlName="tvrtka" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Adresa</label>
+          <input type="text" formControlName="adresa" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Mjesto</label>
+            <input type="text" formControlName="mjesto" />
+          </div>
+          <div class="form-group">
+            <label>Poštanski broj</label>
+            <input type="text" formControlName="postanskiBroj" />
+          </div>
+          <div class="form-group">
+            <label>Država</label>
+            <input type="text" formControlName="drzava" />
+          </div>
+        </div>
+
+        @if (errorMessage()) {
+          <div class="error-message">{{ errorMessage() }}</div>
+        }
+        @if (successMessage()) {
+          <div class="success-message">{{ successMessage() }}</div>
+        }
+
+        <button type="submit" class="submit-button">Spremi promjene</button>
+      </form>
+    </div>
+  }
+</div>

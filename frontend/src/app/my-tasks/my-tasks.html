@@ -1,0 +1,24 @@
+<div class="page-container">
+  <h1>Moji zadaci</h1>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Naručitelj</th><th>Datum</th><th>Status</th><th>Aktivnosti</th></tr>
+      </thead>
+      <tbody>
+        @for (t of tasks(); track t.id) {
+          <tr>
+            <td>{{ t.id }}</td>
+            <td>{{ t.naruciteljNaziv }}</td>
+            <td>{{ t.datum }}</td>
+            <td><span class="status-badge" [ngClass]="getStatusClass(t.status)">{{ t.status }}</span></td>
+            <td>{{ t.aktivnostiCount }}</td>
+          </tr>
+        } @empty {
+          <tr><td colspan="5" class="empty">Nemate dodijeljenih zadataka</td></tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

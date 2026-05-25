@@ -1,0 +1,43 @@
+<div class="register-container">
+  <div class="register-body">
+    <div class="register-info">
+      <h1>Registracija</h1>
+      <p>Kreirajte korisnički račun za pristup portalu. Nakon registracije moći ćete zatražiti ponude, primati obavijesti i ostaviti recenzije.</p>
+      <p>Već imate račun? <a routerLink="/korisnik/prijava">Prijavite se</a></p>
+    </div>
+    <div class="register-form-wrapper">
+      <div class="register-box">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label>Ime *</label>
+            <input type="text" formControlName="ime" placeholder="Ime" />
+          </div>
+          <div class="form-group">
+            <label>Prezime *</label>
+            <input type="text" formControlName="prezime" placeholder="Prezime" />
+          </div>
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" formControlName="email" placeholder="Email adresa" />
+          </div>
+          <div class="form-group">
+            <label>Lozinka *</label>
+            <input type="password" formControlName="password" placeholder="Minimalno 6 znakova" />
+          </div>
+          <div class="form-group">
+            <label>Telefon</label>
+            <input type="text" formControlName="telefon" placeholder="Telefon (opcionalno)" />
+          </div>
+          <div class="form-group">
+            <label>Tvrtka</label>
+            <input type="text" formControlName="tvrtka" placeholder="Naziv tvrtke (opcionalno)" />
+          </div>
+          @if (errorMessage()) {
+            <div class="error-message">{{ errorMessage() }}</div>
+          }
+          <button type="submit" class="submit-button">Registracija</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

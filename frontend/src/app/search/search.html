@@ -1,0 +1,31 @@
+<div class="search-container">
+  <h2>Pretraži</h2>
+  <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+    <div>
+      <label>Naručitelj:<br>
+        <input formControlName="narucitelj" />
+      </label>
+    </div>
+    <div>
+      <label>Ime:<br>
+        <input formControlName="name" />
+      </label>
+    </div>
+    <div>
+      <label>Radni nalog:<br>
+        <input formControlName="radniNalog" />
+      </label>
+    </div>
+    <div>
+      <label>Opis:<br>
+        <input formControlName="opis" />
+      </label>
+    </div>
+    <div>
+      <label>Radnik:<br>
+        <input formControlName="radnik" />
+      </label>
+    </div>
+    <button type="submit">Traži</button>
+  </form>
+</div>

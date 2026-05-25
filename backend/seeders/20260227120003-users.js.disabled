@@ -1,0 +1,22 @@
+'use strict';
+const bcrypt = require('bcrypt');
+
+module.exports = {
+  async up(queryInterface, Sequelize) {
+    const password1 = await bcrypt.hash('HajdukSplit1950!', 10);
+    const password2 = await bcrypt.hash('adminpass', 10);
+
+    await queryInterface.bulkInsert('users', [
+      {
+        username: 'mate',
+        password: password1,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    ]);
+  },
+
+  async down(queryInterface, Sequelize) {
+    await queryInterface.bulkDelete('users', null, {});
+  }
+};

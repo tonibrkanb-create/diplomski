@@ -1,0 +1,19 @@
+'use strict';
+
+module.exports = {
+  async up(queryInterface, Sequelize) {
+    // clear existing entries to keep seeder idempotent
+    await queryInterface.bulkDelete('notes', null, {});
+    await queryInterface.bulkDelete('documents', null, {});
+    await queryInterface.bulkDelete('radni_nalozi', null, {});
+    await queryInterface.bulkDelete('narucitelji', null, {});
+  },
+
+  async down(queryInterface, Sequelize) {
+    // Delete all data from tables
+    await queryInterface.bulkDelete('notes', null, {});
+    await queryInterface.bulkDelete('documents', null, {});
+    await queryInterface.bulkDelete('radni_nalozi', null, {});
+    await queryInterface.bulkDelete('narucitelji', null, {});
+  }
+};
