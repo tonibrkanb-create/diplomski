@@ -40,6 +40,16 @@ export class AuthService {
       );
   }
 
+    korisnikLogin(email: string, password: string): Observable<string> {
+    console.log('AuthService: Initiating login for', email);
+    return this.http
+      .post<LoginResponse>(`${environment.apiUrl}/auth/korisnik-login`, { email, password })
+      .pipe(
+        map((response) => this.extractToken(response)),
+        tap((token) => this.setToken(token))
+      );
+  }
+
   getToken(): string | null {
     if (typeof window === 'undefined') {
       return null;
@@ -88,6 +98,7 @@ export class AuthService {
   }
 
   private extractToken(response: LoginResponse): string {
+    console.log('AuthService: Extracting token from response', response);
     const token = response?.token
       ?? response?.accessToken
       ?? response?.access_token

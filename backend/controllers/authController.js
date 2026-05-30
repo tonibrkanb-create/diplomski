@@ -26,10 +26,13 @@ class AuthController {
       console.log('Login attempt for username:', req.body.username);
       const user = await authService.login(req.body.username, req.body.password);
       const token = jwt.sign(
-        { id: user.id, username: user.username, role: 'radnik' },
+        { id: user.id, username: user.username, role: user.role },
         getJwtSecret(),
         { expiresIn: '24h' }
       );
+      let tok = jwt.decode(token, { complete: true });
+      console.log('token:', tok);
+      console.log('Decoded token payload:', tok.payload.id);
       res.json({ user, token });
     } catch (error) {
       res.status(401).json({ message: error.message });
@@ -38,12 +41,14 @@ class AuthController {
 
   async korisnikLogin(req, res) {
     try {
+      console.log('Korisnik login attempt for email:', req.body.email);
       const user = await authService.korisnikLogin(req.body.email, req.body.password);
       const token = jwt.sign(
         { id: user.id, email: user.email, role: 'korisnik' },
         getJwtSecret(),
         { expiresIn: '24h' }
       );
+      console.log('token:', token);
       res.json({ user, token });
     } catch (error) {
       res.status(401).json({ message: error.message });

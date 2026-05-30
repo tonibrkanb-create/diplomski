@@ -28,6 +28,18 @@ export class Login {
 
     this.errorMessage.set('');
     console.log('Attempting login with', this.username, this.password);
+    if(this.username.includes('@')) {
+      this.authService.korisnikLogin(this.username, this.password).subscribe({
+        next: () => {
+          this.router.navigate(['/radniNalozi']);
+        },
+        error: (error) => {
+          console.error('Login failed:', error);
+          this.errorMessage.set('Prijava nije uspjela. Provjerite podatke za prijavu.');
+        }
+      });
+      return;
+    }
     this.authService.login(this.username, this.password).subscribe({
       next: () => {
         this.router.navigate(['/radniNalozi']);

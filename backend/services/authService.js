@@ -7,7 +7,8 @@ class AuthService {
       // will trigger model hook to hash
       return await db.user.create({
         username: data.username,
-        password: data.password
+        password: data.password,
+        role: data.role || 'radnik'
       });
     } catch (error) {
       throw new Error(`Error creating user: ${error.message}`);
