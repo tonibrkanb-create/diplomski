@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 export interface UserRecord {
   id: number;
   username: string;
+  role?: string;
   ime?: string;
   prezime?: string;
   email?: string;

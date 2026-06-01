@@ -31,4 +31,25 @@ const create = async (korisnikId, { opis, vrstaAtesta, lokacija, zeljeniDatum })
   });
 };
 
-module.exports = { getByKorisnik, getById, create };
+const updateStatusByKorisnik = async (id, korisnikId, status) => {
+  const ponuda = await Ponuda.findOne({ where: { id, korisnikId } });
+  if (!ponuda) {
+    throw new Error('Ponuda nije pronađena');
+  }
+
+  // Korisnik can only respond to sent offers
+  if (ponuda.status !== 'poslana') {
+    throw new Error('Ponuda nije dostupna za odgovor');
+  }
+
+  const validStatuses = ['odobrena', 'odbijena'];
+  if (!validStatuses.includes(status)) {
+    throw new Error('Nevažeći status');
+  }
+
+  ponuda.status = status;
+  await ponuda.save();
+  return ponuda;
+};
+
+module.exports = { getByKorisnik, getById, create, updateStatusByKorisnik };

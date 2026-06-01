@@ -37,11 +37,22 @@
   max-width: 360px;
 }
 
-.login-box {
+.login-box,
+.register-box {
   background: #fff;
   padding: 30px 25px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.register-box {
+  margin-top: 24px;
+}
+
+.register-box h2 {
+  font-size: 20px;
+  margin-bottom: 18px;
+  color: #333;
 }
 
 .form-group {
@@ -86,6 +97,21 @@
 
 .login-button:hover {
   background-color: #5e22d1;
+}
+
+.login-link-row {
+  text-align: center;
+  margin-top: 14px;
+}
+
+.login-link {
+  color: #400090;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-link:hover {
+  text-decoration: underline;
 }
 
 @media (max-width: 960px) {

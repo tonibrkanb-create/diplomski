@@ -18,6 +18,7 @@ router.put('/profil', korisnikAuth, korisnikController.updateProfile);
 router.get('/ponude', korisnikAuth, ponudeController.list);
 router.post('/ponude', korisnikAuth, ponudeController.create);
 router.get('/ponude/:id', korisnikAuth, ponudeController.getById);
+router.put('/ponude/:id/status', korisnikAuth, ponudeController.updateStatus);
 
 // Obavijesti (authenticated)
 router.get('/obavijesti', korisnikAuth, obavijestiController.list);

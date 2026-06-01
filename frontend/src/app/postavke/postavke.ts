@@ -7,6 +7,7 @@ import { fromEvent } from 'rxjs';
 import { forkJoin } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AktivnostiService, Aktivnost } from '../services/aktivnosti.service';
+import { ManagementService, UserRecord } from '../services/management.service';
 import { RegisterUserFormComponent } from './register-user-form';
 import { ConfirmDeletePopupComponent } from '../confirm-delete-popup/confirm-delete-popup';
 
@@ -19,7 +20,7 @@ import { ConfirmDeletePopupComponent } from '../confirm-delete-popup/confirm-del
 })
 export class PostavkeComponent implements OnInit {
   onUserRegistered() {
-    // Optionally reload users or show a toast
+    // Optional callback after a user is registered.
   }
   aktivnosti: Aktivnost[] = [];
   loading = false;
@@ -39,7 +40,10 @@ export class PostavkeComponent implements OnInit {
   private readonly sanitizer = inject(DomSanitizer);
   private readonly cdr = inject(ChangeDetectorRef);
 
-  constructor(private aktivnostiService: AktivnostiService) {}
+  constructor(
+    private aktivnostiService: AktivnostiService,
+    private managementService: ManagementService
+  ) {}
 
   ngOnInit() {
     this.loadAktivnosti();

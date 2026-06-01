@@ -66,6 +66,34 @@ export class KorisnikPonudeComponent implements OnInit {
     });
   }
 
+  acceptPonuda(id: number) {
+    this.errorMessage.set('');
+    this.successMessage.set('');
+    this.korisnikService.updatePonudaStatus(id, 'odobrena').subscribe({
+      next: () => {
+        this.successMessage.set('Ponuda prihvaćena. Radnik je obaviješten.');
+        this.loadPonude();
+      },
+      error: (err) => {
+        this.errorMessage.set(err.error?.message || 'Neuspjelo prihvaćanje ponude');
+      }
+    });
+  }
+
+  rejectPonuda(id: number) {
+    this.errorMessage.set('');
+    this.successMessage.set('');
+    this.korisnikService.updatePonudaStatus(id, 'odbijena').subscribe({
+      next: () => {
+        this.successMessage.set('Ponuda odbijena. Radnik je obaviješten.');
+        this.loadPonude();
+      },
+      error: (err) => {
+        this.errorMessage.set(err.error?.message || 'Neuspjelo odbijanje ponude');
+      }
+    });
+  }
+
   getStatusLabel(status: string): string {
     const labels: Record<string, string> = {
       nova: 'Nova',

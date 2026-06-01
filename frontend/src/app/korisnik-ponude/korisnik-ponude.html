@@ -62,6 +62,12 @@
             <strong>Odgovor:</strong> {{ ponuda.odgovor }}
           </div>
         }
+        @if (ponuda.status === 'poslana') {
+          <div class="item-actions">
+            <button class="action-button accept" type="button" (click)="acceptPonuda(ponuda.id)">Prihvati ponudu</button>
+            <button class="action-button reject" type="button" (click)="rejectPonuda(ponuda.id)">Odbi ponudu</button>
+          </div>
+        }
       </div>
     } @empty {
       <div class="empty-state">Nemate zahtjeva za ponude</div>

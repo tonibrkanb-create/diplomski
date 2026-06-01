@@ -1,4 +1,5 @@
 const ponudeService = require('../services/ponudeService');
+const logService = require('../services/logService');
 
 const list = async (req, res) => {
   try {
@@ -27,4 +28,24 @@ const create = async (req, res) => {
   }
 };
 
-module.exports = { list, getById, create };
+const updateStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const ponuda = await ponudeService.updateStatusByKorisnik(req.params.id, req.korisnik.korisnikId, status);
+    
+    // Log the status update
+    await logService.log(
+      'UPDATE_STATUS',
+      'ponuda',
+      ponuda.id,
+      null,
+      `Korisnik ${req.korisnik.korisnikId} je ${status === 'odobrena' ? 'prihvatio' : 'odbio'} ponudu`
+    );
+    
+    res.json(ponuda);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+module.exports = { list, getById, create, updateStatus };

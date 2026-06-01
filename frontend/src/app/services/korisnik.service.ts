@@ -93,6 +93,10 @@ export class KorisnikService {
     return this.http.post<Ponuda>(`${environment.apiUrl}/korisnik/ponude`, data, { headers: this.getHeaders() });
   }
 
+  updatePonudaStatus(id: number, status: 'odobrena' | 'odbijena'): Observable<Ponuda> {
+    return this.http.put<Ponuda>(`${environment.apiUrl}/korisnik/ponude/${id}/status`, { status }, { headers: this.getHeaders() });
+  }
+
   // Obavijesti
   getObavijesti(): Observable<Obavijest[]> {
     return this.http.get<Obavijest[]>(`${environment.apiUrl}/korisnik/obavijesti`, { headers: this.getHeaders() });

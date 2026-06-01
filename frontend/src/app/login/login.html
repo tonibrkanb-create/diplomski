@@ -2,11 +2,6 @@
   <div class="login-body">
     <div class="login-info">
       <h1>Dobrodošli natrag</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula urna in sapien ultrices,
-      vitae molestie nisi elementum. Integer euismod, nibh eu facilisis finibus, tellus mi fringilla
-      velit, non cursus justo elit eget elit.</p>
-      <p>Phasellus sit amet sapien nec lacus elementum suscipit. Vivamus suscipit, ligula vitae
-      scelerisque bibendum, risus magna volutpat magna, sit amet sollicitudin lectus urna eget orci.</p>
     </div>
 
     <div class="login-form-wrapper">
@@ -36,6 +31,9 @@
             {{ errorMessage() }}
           </div>
           <button type="submit" class="login-button">Prijava</button>
+          <div class="login-link-row">
+            <a routerLink="/korisnik/prijava" class="login-link">Prijavi se kao korisnik</a>
+          </div>
         </form>
       </div>
     </div>
