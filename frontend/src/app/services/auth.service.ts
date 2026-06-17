@@ -8,11 +8,16 @@ export interface LoginResponse {
   accessToken?: string;
   access_token?: string;
   jwt?: string;
+  role?: string;
   data?: {
     token?: string;
     accessToken?: string;
     access_token?: string;
     jwt?: string;
+    role?: string;
+  };
+  user?: {
+    role?: string;
   };
 }
 
@@ -20,7 +25,9 @@ export interface LoginResponse {
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly tokenStorageKey = 'auth_token';
+  private readonly roleStorageKey = 'auth_role';
   private readonly fallbackTokenKeys = ['auth_token', 'token', 'access_token', 'accessToken', 'jwt'];
+  private readonly fallbackRoleKeys = ['auth_role', 'role'];
 
   /** Emits when a 401 response is received and the session should be ended. */
   readonly unauthorizedEvent$ = new Subject<void>();
@@ -35,18 +42,27 @@ export class AuthService {
     return this.http
       .post<LoginResponse>(`${environment.apiUrl}/auth/login`, { username, password })
       .pipe(
-        map((response) => this.extractToken(response)),
-        tap((token) => this.setToken(token))
+        tap((response) => {
+          const token = this.extractToken(response);
+          const role = this.extractRole(response);
+          this.setToken(token);
+          this.setRole(role);
+        }),
+        map((response) => this.extractToken(response))
       );
   }
 
-    korisnikLogin(email: string, password: string): Observable<string> {
+  korisnikLogin(email: string, password: string): Observable<string> {
     console.log('AuthService: Initiating login for', email);
     return this.http
       .post<LoginResponse>(`${environment.apiUrl}/auth/korisnik-login`, { email, password })
       .pipe(
-        map((response) => this.extractToken(response)),
-        tap((token) => this.setToken(token))
+        tap((response) => {
+          const token = this.extractToken(response);
+          this.setToken(token);
+          this.clearRole();
+        }),
+        map((response) => this.extractToken(response))
       );
   }
 
@@ -95,6 +111,60 @@ export class AuthService {
       localStorage.removeItem(key);
       sessionStorage.removeItem(key);
     }
+
+    this.clearRole();
+  }
+
+  getRole(): string | null {
+    if (typeof window === 'undefined') {
+      return null;
+    }
+
+    for (const key of this.fallbackRoleKeys) {
+      const localRole = localStorage.getItem(key);
+      if (localRole) {
+        if (key !== this.roleStorageKey) {
+          localStorage.setItem(this.roleStorageKey, localRole);
+        }
+        return localRole;
+      }
+
+      const sessionRole = sessionStorage.getItem(key);
+      if (sessionRole) {
+        localStorage.setItem(this.roleStorageKey, sessionRole);
+        return sessionRole;
+      }
+    }
+
+    return null;
+  }
+
+  setRole(role: string | null | undefined): void {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const sanitizedRole = role?.trim();
+    if (!sanitizedRole) {
+      this.clearRole();
+      return;
+    }
+
+    for (const key of this.fallbackRoleKeys) {
+      localStorage.setItem(key, sanitizedRole);
+    }
+    sessionStorage.setItem(this.roleStorageKey, sanitizedRole);
+  }
+
+  clearRole(): void {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    for (const key of this.fallbackRoleKeys) {
+      localStorage.removeItem(key);
+      sessionStorage.removeItem(key);
+    }
   }
 
   private extractToken(response: LoginResponse): string {
@@ -113,5 +183,13 @@ export class AuthService {
     }
 
     return token;
+  }
+
+  private extractRole(response: LoginResponse): string | null {
+    const role = response?.role
+      ?? response?.data?.role
+      ?? response?.user?.role;
+
+    return role?.trim() || null;
   }
 }

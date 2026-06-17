@@ -18,6 +18,7 @@ module.exports = {
           ime: 'Admin',
           prezime: 'User',
           email: 'admin@mateategibe.com',
+          role: 'admin',
           isActive: true,
           createdAt: new Date(),
           updatedAt: new Date()
@@ -28,6 +29,7 @@ module.exports = {
           ime: 'Marko',
           prezime: 'Horvat',
           email: 'marko@mateategibe.com',
+          role: 'manager',
           isActive: true,
           createdAt: new Date(),
           updatedAt: new Date()
@@ -38,6 +40,7 @@ module.exports = {
           ime: 'Ana',
           prezime: 'Horvat',
           email: 'ana@mateategibe.com',
+          role: 'tehnicar',
           isActive: true,
           createdAt: new Date(),
           updatedAt: new Date()

@@ -1,15 +1,28 @@
 const db = require('../models');
 const bcrypt = require('bcrypt');
 
+const ALLOWED_ROLES = ['admin', 'manager', 'tehnicar'];
+
+const normalizeRole = (role) => {
+  const resolvedRole = role || 'tehnicar';
+  if (!ALLOWED_ROLES.includes(resolvedRole)) {
+    throw new Error(`Invalid role. Allowed roles: ${ALLOWED_ROLES.join(', ')}`);
+  }
+
+  return resolvedRole;
+};
+
 class AuthService {
   async register(data) {
     try {
-      // will trigger model hook to hash
-      return await db.user.create({
+      const user = await db.user.create({
         username: data.username,
         password: data.password,
-        role: data.role || 'radnik'
+        role: normalizeRole(data.role)
       });
+
+      const { password, ...safeUser } = user.toJSON();
+      return safeUser;
     } catch (error) {
       throw new Error(`Error creating user: ${error.message}`);
     }

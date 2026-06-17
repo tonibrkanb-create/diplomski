@@ -18,6 +18,9 @@ export class App implements OnInit {
   protected readonly year = new Date().getFullYear();
   protected readonly isEmbedded = signal(false);
   protected readonly isAuthenticated = signal(false);
+  protected readonly userRole = signal<string | null>(null);
+  protected readonly isTehnicar = signal(false);
+  protected readonly isManager = signal(false);
   protected readonly isKorisnikRoute = signal(false);
   protected readonly uskoroIsticeCount = signal(0);
   protected readonly successModalOpen;
@@ -71,6 +74,9 @@ export class App implements OnInit {
     this.authService.clearToken();
 
     this.isAuthenticated.set(false);
+    this.userRole.set(null);
+    this.isTehnicar.set(false);
+    this.isManager.set(false);
     this.uskoroIsticeCount.set(0);
     this.router.navigate(['/login']);
   }
@@ -109,7 +115,14 @@ export class App implements OnInit {
   }
 
   private updateAuthState() {
-    this.isAuthenticated.set(!!this.authService.getToken());
+    const token = this.authService.getToken();
+    const role = this.authService.getRole();
+    const normalizedRole = role?.trim().toLowerCase() ?? null;
+
+    this.isAuthenticated.set(!!token);
+    this.userRole.set(role);
+    this.isTehnicar.set(normalizedRole === 'tehnicar');
+    this.isManager.set(normalizedRole === 'manager');
   }
 
   private updateKorisnikRoute() {

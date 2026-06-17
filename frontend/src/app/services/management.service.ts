@@ -115,7 +115,7 @@ export class ManagementService {
   getUser(id: number): Observable<UserRecord> {
     return this.http.get<UserRecord>(`${environment.apiUrl}/users/${id}`);
   }
-  createUser(data: { username: string; password: string; ime?: string; prezime?: string; email?: string }): Observable<UserRecord> {
+  createUser(data: { username: string; password: string; role: string; ime?: string; prezime?: string; email?: string }): Observable<UserRecord> {
     return this.http.post<UserRecord>(`${environment.apiUrl}/users`, data);
   }
   updateUser(id: number, data: Partial<UserRecord & { password?: string }>): Observable<UserRecord> {

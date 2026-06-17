@@ -14,6 +14,7 @@ export class UserManagementComponent implements OnInit {
   users = signal<UserRecord[]>([]);
   showForm = signal(false);
   editingId = signal<number | null>(null);
+  readonly roleOptions = ['admin', 'manager', 'tehnicar'];
   form: FormGroup;
   errorMessage = signal('');
   successMessage = signal('');
@@ -24,6 +25,7 @@ export class UserManagementComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       username: ['', Validators.required],
+      role: ['', Validators.required],
       password: [''],
       ime: [''],
       prezime: [''],
@@ -40,8 +42,11 @@ export class UserManagementComponent implements OnInit {
   openAdd() {
     this.editingId.set(null);
     this.form.reset();
+    this.form.get('role')?.setValue('');
     this.form.get('password')?.setValidators(Validators.required);
     this.form.get('password')?.updateValueAndValidity();
+    this.form.get('role')?.setValidators(Validators.required);
+    this.form.get('role')?.updateValueAndValidity();
     this.showForm.set(true);
     this.errorMessage.set('');
   }
@@ -51,6 +56,8 @@ export class UserManagementComponent implements OnInit {
     this.form.patchValue(user);
     this.form.get('password')?.clearValidators();
     this.form.get('password')?.updateValueAndValidity();
+    this.form.get('role')?.setValidators(Validators.required);
+    this.form.get('role')?.updateValueAndValidity();
     this.showForm.set(true);
     this.errorMessage.set('');
   }

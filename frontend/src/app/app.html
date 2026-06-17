@@ -6,22 +6,29 @@
 				<nav class="main-nav" aria-label="Glavna navigacija">
 					@if (isAuthenticated()) {
 						<a routerLink="/radniNalozi" routerLinkActive="active">Radni Nalozi</a>
-						<a routerLink="/narucitelji" routerLinkActive="active">Naručitelji</a>
-						<a routerLink="/uskoroistice" routerLinkActive="active" class="nav-with-badge">
-							<span>Uskoro Ističe</span>
-							@if (uskoroIsticeCount() > 0) {
-								<span class="counter-badge">{{ uskoroIsticeCount() }}</span>
-							}
-						</a>
-						<a routerLink="/users" routerLinkActive="active">Radnici</a>
-						<a routerLink="/statistics" routerLinkActive="active">Statistika</a>
-						<a routerLink="/ponude-management" routerLinkActive="active">Ponude</a>
-						<a routerLink="/recenzije-management" routerLinkActive="active">Recenzije</a>
-						<a routerLink="/send-obavijest" routerLinkActive="active">Obavijesti</a>
-						<a routerLink="/reports" routerLinkActive="active">Izvještaji</a>
-						<a routerLink="/logovi" routerLinkActive="active">Logovi</a>
 						<a routerLink="/my-tasks" routerLinkActive="active">Moji zadaci</a>
-						<a routerLink="/postavke" routerLinkActive="active">Postavke</a>
+						@if (isManager()) {
+							<a routerLink="/ponude-management" routerLinkActive="active">Ponude</a>
+							<a routerLink="/recenzije-management" routerLinkActive="active">Recenzije</a>
+							<a routerLink="/reports" routerLinkActive="active">Izvještaji</a>
+							<a routerLink="/send-obavijest" routerLinkActive="active">Obavijesti</a>
+						} @else if (!isTehnicar()) {
+							<a routerLink="/narucitelji" routerLinkActive="active">Naručitelji</a>
+							<a routerLink="/uskoroistice" routerLinkActive="active" class="nav-with-badge">
+								<span>Uskoro Ističe</span>
+								@if (uskoroIsticeCount() > 0) {
+									<span class="counter-badge">{{ uskoroIsticeCount() }}</span>
+								}
+							</a>
+							<a routerLink="/users" routerLinkActive="active">Radnici</a>
+							<a routerLink="/statistics" routerLinkActive="active">Statistika</a>
+							<a routerLink="/ponude-management" routerLinkActive="active">Ponude</a>
+							<a routerLink="/recenzije-management" routerLinkActive="active">Recenzije</a>
+							<a routerLink="/send-obavijest" routerLinkActive="active">Obavijesti</a>
+							<a routerLink="/reports" routerLinkActive="active">Izvještaji</a>
+							<a routerLink="/logovi" routerLinkActive="active">Logovi</a>
+							<a routerLink="/postavke" routerLinkActive="active">Postavke</a>
+						}
 						<button type="button" class="logout-button" (click)="logout()">Odjava</button>
 					} @else {
 						<a routerLink="/login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Prijava</a>
