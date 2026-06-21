@@ -1,5 +1,11 @@
 <div class="page-container">
-  <h1>Statistika</h1>
+  <div class="page-header">
+    <div>
+      <p class="eyebrow">Pregled poslovanja</p>
+      <h1>Statistika</h1>
+      <p class="intro">Prebaci se između prihoda, učinka i izdanih naloga bez napuštanja stranice.</p>
+    </div>
+  </div>
 
   @if (stats()) {
     <div class="stat-cards">
@@ -12,56 +18,85 @@
     </div>
   }
 
-  <div class="section">
-    <h2>Prihod po aktivnosti</h2>
-    <div class="card">
-      <table>
-        <thead><tr><th>Aktivnost</th><th>Cijena</th><th>Broj naloga</th><th>Ukupno</th></tr></thead>
-        <tbody>
-          @for (item of revenue(); track item.id) {
-            <tr>
-              <td>{{ item.aktivnost }}</td>
-              <td>{{ item.cijena | number:'1.2-2' }} EUR</td>
-              <td>{{ item.count }}</td>
-              <td><strong>{{ item.ukupno | number:'1.2-2' }} EUR</strong></td>
-            </tr>
-          }
-        </tbody>
-        <tfoot><tr><td colspan="3"><strong>Ukupno</strong></td><td><strong>{{ totalRevenue() | number:'1.2-2' }} EUR</strong></td></tr></tfoot>
-      </table>
-    </div>
+  <div class="tabs" role="tablist" aria-label="Prikaz statistike">
+    @for (tab of tabs; track tab.id) {
+      <button
+        type="button"
+        class="tab"
+        role="tab"
+        [attr.aria-selected]="activeTab() === tab.id"
+        [class.active]="activeTab() === tab.id"
+        (click)="setTab(tab.id)"
+      >
+        {{ tab.label }}
+      </button>
+    }
   </div>
 
-  <div class="section">
-    <h2>Učinak po radniku</h2>
-    <div class="card">
-      <table>
-        <thead><tr><th>Radnik</th><th>Ukupno naloga</th><th>Završeno</th><th>Fakturirano</th></tr></thead>
-        <tbody>
-          @for (item of performance(); track item.id) {
-            <tr>
-              <td>{{ item.ime || '' }} {{ item.prezime || '' }} ({{ item.username }})</td>
-              <td>{{ item.total }}</td>
-              <td>{{ item.zavrseno }}</td>
-              <td>{{ item.fakturirano }}</td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-  </div>
+  <div class="section-panel">
+    @if (activeTab() === 'prihodi') {
+      <div class="section">
+        <h2>Prihod po aktivnosti</h2>
+        <div class="card">
+          <table>
+            <thead><tr><th>Aktivnost</th><th>Cijena</th><th>Broj naloga</th><th>Ukupno</th></tr></thead>
+            <tbody>
+              @for (item of revenue(); track item.id) {
+                <tr>
+                  <td>{{ item.aktivnost }}</td>
+                  <td>{{ item.cijena | number:'1.2-2' }} EUR</td>
+                  <td>{{ item.count }}</td>
+                  <td><strong>{{ item.ukupno | number:'1.2-2' }} EUR</strong></td>
+                </tr>
+              } @empty {
+                <tr><td colspan="4" class="empty-state">Nema podataka o prihodima.</td></tr>
+              }
+            </tbody>
+            <tfoot><tr><td colspan="3"><strong>Ukupno</strong></td><td><strong>{{ totalRevenue() | number:'1.2-2' }} EUR</strong></td></tr></tfoot>
+          </table>
+        </div>
+      </div>
+    }
 
-  <div class="section">
-    <h2>Izdano po mjesecu</h2>
-    <div class="card">
-      <table>
-        <thead><tr><th>Mjesec</th><th>Broj naloga</th></tr></thead>
-        <tbody>
-          @for (item of monthly(); track item.month) {
-            <tr><td>{{ item.month }}</td><td>{{ item.count }}</td></tr>
-          }
-        </tbody>
-      </table>
-    </div>
+    @if (activeTab() === 'ucinak') {
+      <div class="section">
+        <h2>Učinak po radniku</h2>
+        <div class="card">
+          <table>
+            <thead><tr><th>Radnik</th><th>Ukupno naloga</th><th>Završeno</th><th>Fakturirano</th></tr></thead>
+            <tbody>
+              @for (item of performance(); track item.id) {
+                <tr>
+                  <td>{{ item.ime || '' }} {{ item.prezime || '' }} ({{ item.username }})</td>
+                  <td>{{ item.total }}</td>
+                  <td>{{ item.zavrseno }}</td>
+                  <td>{{ item.fakturirano }}</td>
+                </tr>
+              } @empty {
+                <tr><td colspan="4" class="empty-state">Nema podataka o učinku.</td></tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
+
+    @if (activeTab() === 'izdano') {
+      <div class="section">
+        <h2>Izdano po mjesecu</h2>
+        <div class="card">
+          <table>
+            <thead><tr><th>Mjesec</th><th>Broj naloga</th></tr></thead>
+            <tbody>
+              @for (item of monthly(); track item.month) {
+                <tr><td>{{ item.month }}</td><td>{{ item.count }}</td></tr>
+              } @empty {
+                <tr><td colspan="2" class="empty-state">Nema podataka o izdanju.</td></tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
   </div>
 </div>

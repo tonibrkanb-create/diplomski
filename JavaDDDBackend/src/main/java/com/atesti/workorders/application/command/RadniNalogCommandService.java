@@ -39,14 +39,9 @@ public class RadniNalogCommandService {
 
     @Transactional
     public RadniNalogResponse create(CreateRadniNalogCommand command) {
-        if (command.getAktivnosti() == null) {
-            throw new BadRequestException("Error creating radni nalog: Aktivnosti field is required and must be an array");
-        }
-
         List<Long> aktivnostiList = normalizeAktivnostiInput(command.getAktivnosti());
 
-        Long naruciteljId = command.getNaruciteljId() != null ? command.getNaruciteljId() : command.getNaruciteljIdAlt();
-        Narucitelj narucitelj = naruciteljRepository.findById(naruciteljId)
+        Narucitelj narucitelj = naruciteljRepository.findById(command.getNaruciteljId())
                 .orElseThrow(() -> new BadRequestException("Error creating radni nalog: Narucitelj not found"));
 
         String brojNaloga = command.getBrojNaloga();

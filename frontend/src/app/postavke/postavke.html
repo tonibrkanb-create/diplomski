@@ -30,6 +30,7 @@
             <th>#</th>
             <th>Naziv</th>
             <th>Trajanje Mjeseci</th>
+            <th>Cijena</th>
             <th>Aktivna</th>
           </tr>
         </thead>
@@ -46,6 +47,7 @@
             <td>{{ item.id }}</td>
             <td>{{ item.naziv }}</td>
             <td>{{ item.trajanje }}</td>
+            <td>{{ item.cijena != null ? (item.cijena | number:'1.2-2') + ' EUR' : '-' }}</td>
             <td><input type="checkbox" [checked]="item.isActive" disabled /></td>
           </tr>
         </tbody>

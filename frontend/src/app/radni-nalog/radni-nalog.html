@@ -59,9 +59,9 @@
 
   <div class="pagination">
     <button (click)="changePage(-1)" [disabled]="currentPage===1">Prethodna</button>
-    <select [(ngModel)]="currentPage" (ngModelChange)="setPage($event)" class="page-select">
-      <option *ngFor="let page of getPageNumbers()" [value]="page">Stranica {{ page }} od {{ maxPage }}</option>
-    </select>
+    <!-- <select [(ngModel)]="currentPage" (ngModelChange)="setPage($event)" class="page-select">
+      <!-- <option *ngFor="let page of getPageNumbers()" [value]="page">Stranica {{ page }} od {{ maxPage }}</option> -->
+   <!--  </select> -->
     <button (click)="changePage(1)" [disabled]="currentPage>=maxPage">Sljedeća</button>
   </div>
 

@@ -4,7 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93f0fcb3-4b9a-42cc-9158-7193ec35e68d" name="Changes" comment="" />
+    <list default="true" id="93f0fcb3-4b9a-42cc-9158-7193ec35e68d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JavaSimpleBackend/src/JavaSimpleBackend.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/command/RadniNalogCommandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/command/RadniNalogCommandService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/dto/command/CreateRadniNalogCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/dto/command/CreateRadniNalogCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JavaMicroserviceBackend/clients-service/src/main/java/com/atesti/clients/domain/repository/NaruciteljRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JavaMicroserviceBackend/clients-service/src/main/java/com/atesti/clients/domain/repository/NaruciteljRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JavaSimpleBackend/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JavaSimpleBackend/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/seeders/20260401000007-seed-korisnici.js" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/seeders/20260401000007-seed-korisnici.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/services/radniNaloziService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/services/radniNaloziService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/app/postavke/postavke.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/postavke/postavke.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/app/radni-nalog/radni-nalog.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/radni-nalog/radni-nalog.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/app/statistics/statistics.css" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/statistics/statistics.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/app/statistics/statistics.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/statistics/statistics.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/app/statistics/statistics.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/statistics/statistics.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,22 +30,37 @@
       <entry key="_/Users/toni/Downloads/Atesti-master/JavaDDDBackend" value="3E30wS79DxNUkPBBamNuCeVr5Zw" />
     </persistenceIdMap>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="3E30wS79DxNUkPBBamNuCeVr5Zw" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/toni/Downloads/Atesti-master/JavaDDDBackend"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/tonib/Documents/Projects/diplomski/diplomski/JavaDDDBackend&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>

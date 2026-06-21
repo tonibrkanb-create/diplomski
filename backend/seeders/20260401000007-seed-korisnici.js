@@ -41,9 +41,9 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          ime: 'Jovan',
+          ime: 'Ivan',
           prezime: 'Stankovic',
-          email: 'jovan.stankovic@example.com',
+          email: 'ivan.stankovic@example.com',
           telefon: '+385 51 4561234',
           tvrtka: 'Industrijalizacija d.o.o.',
           adresa: 'Riva 10',

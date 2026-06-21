@@ -340,19 +340,9 @@ class RadniNaloziService {
 
   async updateRadniNalog(id, data) {
     try {
-      const nalog = await db.radni_nalog.findByPk(id);
-
-      if (!nalog) {
-        throw new Error('Radni nalog not found');
-      }
-
       if (!Object.prototype.hasOwnProperty.call(data, 'aktivnosti')) {
         throw new Error('Aktivnosti field is required and must be an array');
       }
-
-      const nextNaruciteljId = data.narucitelj_id !== undefined
-        ? data.narucitelj_id
-        : (data.naruciteljId !== undefined ? data.naruciteljId : nalog.narucitelj_id);
 
       const nextAktivnosti = this.normalizeAktivnostiInput(data.aktivnosti);
       const supportsArrayStorage = await this.supportsArrayAktivnostiStorage();
@@ -361,20 +351,33 @@ class RadniNaloziService {
         throw new Error('Database schema supports only one aktivnost per radni nalog. Run latest migrations to enable multiple aktivnosti.');
       }
 
-      // Enforce RN + 3 digit format if brojNaloga is being updated
-      let brojNalogaToCheck = data.brojNaloga !== undefined ? data.brojNaloga : nalog.brojNaloga;
-      if (!/^RN\d{3}$/.test(brojNalogaToCheck)) {
-        throw new Error('Broj naloga must be in format RN followed by 3 digits, e.g. RN001');
-      }
-
-      if (nextNaruciteljId !== undefined) {
-        const klijent = await db.narucitelj.findByPk(nextNaruciteljId);
-        if (!klijent) {
-          throw new Error('Narucitelj not found');
-        }
-      }
-
       return await db.sequelize.transaction(async (transaction) => {
+        const nalog = await db.radni_nalog.findByPk(id, {
+          transaction,
+          lock: transaction.LOCK.UPDATE
+        });
+
+        if (!nalog) {
+          throw new Error('Radni nalog not found');
+        }
+
+        const nextNaruciteljId = data.narucitelj_id !== undefined
+          ? data.narucitelj_id
+          : (data.naruciteljId !== undefined ? data.naruciteljId : nalog.narucitelj_id);
+
+        // Enforce RN + 3 digit format if brojNaloga is being updated
+        const brojNalogaToCheck = data.brojNaloga !== undefined ? data.brojNaloga : nalog.brojNaloga;
+        if (!/^RN\d{3}$/.test(brojNalogaToCheck)) {
+          throw new Error('Broj naloga must be in format RN followed by 3 digits, e.g. RN001');
+        }
+
+        if (nextNaruciteljId !== undefined) {
+          const klijent = await db.narucitelj.findByPk(nextNaruciteljId, { transaction });
+          if (!klijent) {
+            throw new Error('Narucitelj not found');
+          }
+        }
+
         const updatedNalog = await nalog.update({
           narucitelj_id: nextNaruciteljId,
           datum: data.datum ? new Date(data.datum) : nalog.datum,
