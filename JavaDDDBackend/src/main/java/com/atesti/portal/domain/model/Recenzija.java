@@ -1,6 +1,6 @@
 package com.atesti.portal.domain.model;
 
-import com.atesti.workorders.domain.model.RadniNalog;
+import com.atesti.workorders.domain.persistance.RadniNalogEntity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -29,7 +29,7 @@ public class Recenzija {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "radni_nalog_id")
-    private RadniNalog radniNalog;
+    private RadniNalogEntity radniNalogEntity;
 
     @Column(name = "radni_nalog_id", insertable = false, updatable = false)
     private Long radniNalogId;
@@ -49,7 +49,7 @@ public class Recenzija {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public static Recenzija create(Korisnik korisnik, Integer ocjena, String komentar, RadniNalog radniNalog) {
+    public static Recenzija create(Korisnik korisnik, Integer ocjena, String komentar, RadniNalogEntity radniNalogEntity) {
         if (ocjena == null || ocjena < 1 || ocjena > 5) {
             throw new IllegalArgumentException("Ocjena mora biti između 1 i 5");
         }
@@ -57,7 +57,7 @@ public class Recenzija {
                 .korisnik(korisnik)
                 .ocjena(ocjena)
                 .komentar(komentar)
-                .radniNalog(radniNalog)
+                .radniNalogEntity(radniNalogEntity)
                 .build();
     }
 

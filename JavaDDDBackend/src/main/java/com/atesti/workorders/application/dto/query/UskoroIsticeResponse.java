@@ -24,7 +24,7 @@ public class UskoroIsticeResponse {
         return UskoroIsticeResponse.builder()
                 .id(entity.getId())
                 .narucitelj(entity.getNarucitelj() != null ? entity.getNarucitelj().getName() : null)
-                .radniNalog(entity.getRadniNalog() != null ? entity.getRadniNalog().getBrojNaloga() : null)
+                .radniNalog(entity.getRadniNalogEntity() != null ? entity.getRadniNalogEntity().getBrojNaloga() : null)
                 .aktivnost(entity.getAktivnost())
                 .datumIsteka(entity.getDatumIsteka())
                 .isActive(entity.getIsActive())

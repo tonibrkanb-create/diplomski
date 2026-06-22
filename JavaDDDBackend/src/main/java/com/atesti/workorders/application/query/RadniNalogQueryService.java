@@ -1,9 +1,11 @@
 package com.atesti.workorders.application.query;
 
 import com.atesti.shared.exception.ResourceNotFoundException;
+import com.atesti.workorders.application.dto.query.RadniNalogDetailResponse;
 import com.atesti.workorders.application.dto.query.RadniNalogResponse;
 import com.atesti.workorders.application.dto.query.UskoroIsticeResponse;
-import com.atesti.workorders.domain.model.RadniNalog;
+import com.atesti.workorders.domain.model.RadniNalogProjection;
+import com.atesti.workorders.domain.persistance.RadniNalogEntity;
 import com.atesti.workorders.domain.model.UskoroIstice;
 import com.atesti.workorders.domain.repository.RadniNalogRepository;
 import com.atesti.workorders.domain.repository.UskoroIsticeRepository;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,16 +26,16 @@ public class RadniNalogQueryService {
     private final RadniNalogRepository radniNalogRepository;
     private final UskoroIsticeRepository uskoroIsticeRepository;
 
-    public List<RadniNalogResponse> getAll() {
-        return radniNalogRepository.findAll().stream()
+    public List<RadniNalogResponse> getAllNalozi() {
+        return radniNalogRepository.findAllRadniNalog().stream()
                 .map(RadniNalogResponse::from)
                 .collect(Collectors.toList());
     }
 
-    public RadniNalogResponse getById(Long id) {
-        RadniNalog nalog = radniNalogRepository.findById(id)
+    public RadniNalogDetailResponse getById(Long id) {
+        RadniNalogProjection nalog = radniNalogRepository.findRadniNalog(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Radni nalog not found"));
-        return RadniNalogResponse.from(nalog);
+        return RadniNalogDetailResponse.from(nalog);
     }
 
     public List<RadniNalogResponse> getByNaruciteljId(Long naruciteljId) {
@@ -51,5 +54,12 @@ public class RadniNalogQueryService {
         return items.stream()
                 .map(UskoroIsticeResponse::from)
                 .collect(Collectors.toList());
+    }
+
+    public String getNextBrojNaloga() {
+        long count = radniNalogRepository.count();
+        long sequenceNumber = count + 1;
+
+        return "RN00" + sequenceNumber;
     }
 }

@@ -5,7 +5,7 @@ import com.atesti.shared.exception.ResourceNotFoundException;
 import com.atesti.workorders.application.dto.command.AddDocumentCommand;
 import com.atesti.workorders.application.dto.query.DocumentResponse;
 import com.atesti.workorders.domain.model.Document;
-import com.atesti.workorders.domain.model.RadniNalog;
+import com.atesti.workorders.domain.persistance.RadniNalogEntity;
 import com.atesti.workorders.domain.repository.DocumentRepository;
 import com.atesti.workorders.domain.repository.RadniNalogRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class DocumentCommandService {
 
     @Transactional
     public DocumentResponse add(Long radniNalogId, AddDocumentCommand command) {
-        RadniNalog nalog = radniNalogRepository.findById(radniNalogId)
+        RadniNalogEntity nalog = radniNalogRepository.findById(radniNalogId)
                 .orElseThrow(() -> new BadRequestException("Error adding document: Radni nalog not found"));
 
         if (command.getName() == null || command.getName().isBlank()) {
@@ -36,7 +36,7 @@ public class DocumentCommandService {
 
         Document.DocumentBuilder builder = Document.builder()
                 .name(command.getName())
-                .radniNalog(nalog);
+                .radniNalogEntity(nalog);
 
         if (command.getBlob() != null && !command.getBlob().isBlank()) {
             byte[] blobBytes = parseBase64Blob(command.getBlob());

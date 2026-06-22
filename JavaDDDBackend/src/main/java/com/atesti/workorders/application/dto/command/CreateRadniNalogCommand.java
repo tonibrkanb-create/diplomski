@@ -1,30 +1,55 @@
 package com.atesti.workorders.application.dto.command;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-
 import java.util.List;
 
-@Data
-public class CreateRadniNalogCommand {
-    private String brojNaloga;
-    @NotNull
-    private Long naruciteljId;
+public record CreateRadniNalogCommand(
+        String brojNaloga,
+        Long naruciteljId,
+        String datum,
+        String objekt,
+        Boolean fakturirano,
+        Boolean zavrseno,
+        String opis,
+        String brojPonude,
+        String brojRacuna,
+        String narudzbenica,
+        String ugovor,
+        List<Object> aktivnosti,
+        String pdfUrl,
+        Long assignedUserId
+) {
 
+    public CreateRadniNalogCommand {
+        if (brojNaloga != null && !brojNaloga.matches("^RN\\d{3}$")) {
+            throw new IllegalArgumentException("Broj naloga is invalid");
+        }
 
-    private String datum;
-    private String objekt;
-    private Boolean fakturirano;
-    private Boolean zavrseno;
-    private String opis;
-    private String brojPonude;
-    private String brojRacuna;
-    private String narudzbenica;
-    private String ugovor;
-    @NotEmpty
-    private List<Object> aktivnosti;
-    private String pdfUrl;
-    private Long assignedUserId;
+        if (naruciteljId == null) {
+            throw new IllegalArgumentException("Narucitelj id is required");
+        }
+
+        if (datum == null || datum.isBlank()) {
+            throw new IllegalArgumentException("Datum is required");
+        }
+
+        if (objekt == null || objekt.isBlank()) {
+            throw new IllegalArgumentException("Objekt is required");
+        }
+
+        if (fakturirano == null) {
+            throw new IllegalArgumentException("Fakturirano is required");
+        }
+
+        if (zavrseno == null) {
+            throw new IllegalArgumentException("Zavrseno is required");
+        }
+
+        if (opis == null || opis.isBlank()) {
+            throw new IllegalArgumentException("Opis is required");
+        }
+
+        if (aktivnosti.isEmpty()) {
+            throw new IllegalArgumentException("Aktivnosti cannot be empty");
+        }
+    }
 }

@@ -8,7 +8,7 @@ import com.atesti.portal.domain.model.Recenzija;
 import com.atesti.portal.domain.repository.KorisnikRepository;
 import com.atesti.portal.domain.repository.RecenzijaRepository;
 import com.atesti.shared.exception.ResourceNotFoundException;
-import com.atesti.workorders.domain.model.RadniNalog;
+import com.atesti.workorders.domain.persistance.RadniNalogEntity;
 import com.atesti.workorders.domain.repository.RadniNalogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,12 +27,12 @@ public class RecenzijaCommandService {
         Korisnik korisnik = korisnikRepository.findById(korisnikId)
                 .orElseThrow(() -> new ResourceNotFoundException("Korisnik not found"));
 
-        RadniNalog radniNalog = null;
+        RadniNalogEntity radniNalogEntity = null;
         if (command.getRadniNalogId() != null) {
-            radniNalog = radniNalogRepository.findById(command.getRadniNalogId()).orElse(null);
+            radniNalogEntity = radniNalogRepository.findById(command.getRadniNalogId()).orElse(null);
         }
 
-        Recenzija recenzija = Recenzija.create(korisnik, command.getOcjena(), command.getKomentar(), radniNalog);
+        Recenzija recenzija = Recenzija.create(korisnik, command.getOcjena(), command.getKomentar(), radniNalogEntity);
         Recenzija saved = recenzijaRepository.save(recenzija);
         return RecenzijaResponse.from(saved);
     }

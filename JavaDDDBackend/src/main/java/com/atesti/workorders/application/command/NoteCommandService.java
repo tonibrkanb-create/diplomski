@@ -5,7 +5,7 @@ import com.atesti.shared.exception.ResourceNotFoundException;
 import com.atesti.workorders.application.dto.command.AddNoteCommand;
 import com.atesti.workorders.application.dto.query.NoteResponse;
 import com.atesti.workorders.domain.model.Note;
-import com.atesti.workorders.domain.model.RadniNalog;
+import com.atesti.workorders.domain.persistance.RadniNalogEntity;
 import com.atesti.workorders.domain.repository.NoteRepository;
 import com.atesti.workorders.domain.repository.RadniNalogRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class NoteCommandService {
 
     @Transactional
     public NoteResponse add(Long radniNalogId, AddNoteCommand command) {
-        RadniNalog nalog = radniNalogRepository.findById(radniNalogId)
+        RadniNalogEntity nalog = radniNalogRepository.findById(radniNalogId)
                 .orElseThrow(() -> new BadRequestException("Error adding note: Radni nalog not found"));
 
         if (command.getText() == null || command.getText().isBlank()) {
@@ -47,7 +47,7 @@ public class NoteCommandService {
         Note note = Note.builder()
                 .date(date)
                 .text(command.getText())
-                .radniNalog(nalog)
+                .radniNalogEntity(nalog)
                 .build();
 
         Note saved = noteRepository.save(note);

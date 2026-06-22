@@ -4,7 +4,7 @@ import com.atesti.catalogue.domain.model.Aktivnost;
 import com.atesti.catalogue.domain.repository.AktivnostRepository;
 import com.atesti.clients.domain.model.Narucitelj;
 import com.atesti.shared.exception.ResourceNotFoundException;
-import com.atesti.workorders.domain.model.RadniNalog;
+import com.atesti.workorders.domain.persistance.RadniNalogEntity;
 import com.atesti.workorders.domain.repository.RadniNalogRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,7 +35,7 @@ public class RadniNalogPdfService {
     private final ObjectMapper objectMapper;
 
     public Map<String, Object> generateRadniNalogPdf(Long radniNalogId) {
-        RadniNalog nalog = radniNalogRepository.findById(radniNalogId)
+        RadniNalogEntity nalog = radniNalogRepository.findById(radniNalogId)
                 .orElseThrow(() -> new ResourceNotFoundException("Radni nalog not found"));
 
         List<String> aktivnosti = resolveAktivnosti(nalog.getAktivnosti());
@@ -51,7 +51,7 @@ public class RadniNalogPdfService {
         return result;
     }
 
-    private byte[] buildPdfBuffer(RadniNalog nalog, Narucitelj narucitelj, List<String> aktivnosti) {
+    private byte[] buildPdfBuffer(RadniNalogEntity nalog, Narucitelj narucitelj, List<String> aktivnosti) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         Document document = new Document(PageSize.A4, 52, 52, 48, 48);
@@ -201,7 +201,7 @@ public class RadniNalogPdfService {
         }
     }
 
-    private String buildFileName(RadniNalog nalog) {
+    private String buildFileName(RadniNalogEntity nalog) {
         String brojNaloga = nalog.getBrojNaloga() != null ? nalog.getBrojNaloga() : "nalog-" + nalog.getId();
         String safeName = brojNaloga.replaceAll("[^a-zA-Z0-9\\-_]", "_");
         return safeName + ".pdf";

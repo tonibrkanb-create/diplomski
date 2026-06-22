@@ -1,28 +1,32 @@
 package com.atesti.workorders.application.dto.command;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-
 import java.util.List;
 
-@Data
-public class UpdateRadniNalogCommand {
-    private String brojNaloga;
-    private Long naruciteljId;
+public record UpdateRadniNalogCommand(
+        String brojNaloga,
+        Long naruciteljId,
+        Long naruciteljIdAlt,
+        String datum,
+        String objekt,
+        Boolean fakturirano,
+        Boolean zavrseno,
+        String opis,
+        String brojPonude,
+        String brojRacuna,
+        String narudzbenica,
+        String ugovor,
+        List<Object> aktivnosti,
+        String pdfUrl,
+        Long assignedUserId
+) {
 
-    @JsonProperty("narucitelj_id")
-    private Long naruciteljIdAlt;
+    public UpdateRadniNalogCommand {
+        if (naruciteljId == null && naruciteljIdAlt == null) {
+            throw new IllegalArgumentException("Narucitelj id is required");
+        }
 
-    private String datum;
-    private String objekt;
-    private Boolean fakturirano;
-    private Boolean zavrseno;
-    private String opis;
-    private String brojPonude;
-    private String brojRacuna;
-    private String narudzbenica;
-    private String ugovor;
-    private List<Object> aktivnosti;
-    private String pdfUrl;
-    private Long assignedUserId;
+        if (aktivnosti == null || aktivnosti.isEmpty()) {
+            throw new IllegalArgumentException("Aktivnosti cannot be empty");
+        }
+    }
 }

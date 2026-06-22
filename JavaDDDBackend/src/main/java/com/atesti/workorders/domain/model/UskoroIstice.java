@@ -1,6 +1,7 @@
 package com.atesti.workorders.domain.model;
 
 import com.atesti.clients.domain.model.Narucitelj;
+import com.atesti.workorders.domain.persistance.RadniNalogEntity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -43,7 +44,7 @@ public class UskoroIstice {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "radni_nalog_id", insertable = false, updatable = false)
-    private RadniNalog radniNalog;
+    private RadniNalogEntity radniNalogEntity;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

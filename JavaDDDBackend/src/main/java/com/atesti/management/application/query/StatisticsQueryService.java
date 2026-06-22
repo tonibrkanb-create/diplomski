@@ -6,7 +6,7 @@ import com.atesti.clients.domain.repository.NaruciteljRepository;
 import com.atesti.management.application.query.dto.*;
 import com.atesti.staffidentity.domain.model.User;
 import com.atesti.staffidentity.domain.repository.UserRepository;
-import com.atesti.workorders.domain.model.RadniNalog;
+import com.atesti.workorders.domain.persistance.RadniNalogEntity;
 import com.atesti.workorders.domain.repository.RadniNalogRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,10 +47,10 @@ public class StatisticsQueryService {
 
     public List<RevenueItemResponse> getRevenueByAktivnost() {
         List<Aktivnost> aktivnosti = aktivnostRepository.findByIsActiveTrueOrderByIdAsc();
-        List<RadniNalog> nalozi = radniNalogRepository.findAll();
+        List<RadniNalogEntity> nalozi = radniNalogRepository.findAll();
 
         Map<Long, Long> countMap = new HashMap<>();
-        for (RadniNalog nalog : nalozi) {
+        for (RadniNalogEntity nalog : nalozi) {
             List<Long> ids = parseAktivnostiJson(nalog.getAktivnosti());
             for (Long id : ids) {
                 countMap.merge(id, 1L, Long::sum);
@@ -72,13 +72,13 @@ public class StatisticsQueryService {
 
     public List<PerformanceItemResponse> getPerformanceByWorker() {
         List<User> users = userRepository.findAllByOrderByIdAsc();
-        List<RadniNalog> assigned = radniNalogRepository.findByAssignedUserIdIsNotNull();
+        List<RadniNalogEntity> assigned = radniNalogRepository.findByAssignedUserIdIsNotNull();
 
-        Map<Long, List<RadniNalog>> byUser = assigned.stream()
+        Map<Long, List<RadniNalogEntity>> byUser = assigned.stream()
                 .collect(Collectors.groupingBy(n -> n.getAssignedUser().getId()));
 
         return users.stream().map(u -> {
-            List<RadniNalog> userNalozi = byUser.getOrDefault(u.getId(), List.of());
+            List<RadniNalogEntity> userNalozi = byUser.getOrDefault(u.getId(), List.of());
             return PerformanceItemResponse.builder()
                     .id(u.getId())
                     .username(u.getUsername())
@@ -92,7 +92,7 @@ public class StatisticsQueryService {
     }
 
     public List<MonthlyItemResponse> getIssuedByMonth() {
-        List<RadniNalog> nalozi = radniNalogRepository.findAll();
+        List<RadniNalogEntity> nalozi = radniNalogRepository.findAll();
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM");
 
         Map<String, Long> grouped = nalozi.stream()

@@ -1,13 +1,18 @@
 package com.atesti.workorders.infrastructure.web;
 
-import com.atesti.workorders.application.command.RadniNalogCommandService;
+import com.atesti.workorders.application.command.RadniNalogDomainService;
 import com.atesti.workorders.application.dto.command.AssignWorkerCommand;
 import com.atesti.workorders.application.dto.command.CreateRadniNalogCommand;
 import com.atesti.workorders.application.dto.command.UpdateRadniNalogCommand;
+import com.atesti.workorders.application.dto.query.RadniNalogDetailResponse;
 import com.atesti.workorders.application.dto.query.RadniNalogResponse;
 import com.atesti.workorders.application.dto.query.UskoroIsticeResponse;
 import com.atesti.workorders.application.query.RadniNalogPdfService;
 import com.atesti.workorders.application.query.RadniNalogQueryService;
+import com.atesti.workorders.domain.model.RadniNalogProjection;
+import com.atesti.workorders.infrastructure.web.model.AssignUserRequest;
+import com.atesti.workorders.infrastructure.web.model.CreateRadniNalogRequest;
+import com.atesti.workorders.infrastructure.web.model.UpdateRadniNalogRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,19 +28,19 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class RadniNaloziController {
 
-    private final RadniNalogCommandService commandService;
+    private final RadniNalogDomainService commandService;
     private final RadniNalogQueryService queryService;
     private final RadniNalogPdfService pdfService;
 
     @GetMapping("/rn001.pdf")
     public ResponseEntity<byte[]> downloadRn001Pdf() {
-        Map<String, Object> result = pdfService.generateRadniNalogPdf(1L);
+        Map<String, Object> result = pdfService.generateRadniNalogPdf(Long.valueOf(1L));
         return buildPdfResponse(result, "RN001.pdf");
     }
 
     @GetMapping("/nextBrojNaloga")
     public ResponseEntity<Map<String, String>> getNextBrojNaloga() {
-        String next = commandService.getNextBrojNaloga();
+        String next = queryService.getNextBrojNaloga();
         return ResponseEntity.ok(Map.of("brojNaloga", next));
     }
 
@@ -46,16 +51,6 @@ public class RadniNaloziController {
         return ResponseEntity.ok(queryService.getUskoroIstice(daysValue));
     }
 
-    @GetMapping
-    public ResponseEntity<List<RadniNalogResponse>> getAll() {
-        return ResponseEntity.ok(queryService.getAll());
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<RadniNalogResponse> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(queryService.getById(id));
-    }
-
     @GetMapping("/{id}/pdf")
     public ResponseEntity<byte[]> downloadPdf(@PathVariable Long id) {
         Map<String, Object> result = pdfService.generateRadniNalogPdf(id);
@@ -63,19 +58,32 @@ public class RadniNaloziController {
         return buildPdfResponse(result, fileName);
     }
 
+
+
+    @GetMapping
+    public ResponseEntity<List<RadniNalogResponse>> getAll() {
+        return ResponseEntity.ok(queryService.getAllNalozi());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RadniNalogDetailResponse> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(queryService.getById(id));
+    }
+
+
     @PostMapping
-    public ResponseEntity<RadniNalogResponse> create(@RequestBody CreateRadniNalogCommand command) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(commandService.create(command));
+    public ResponseEntity<RadniNalogResponse> create(@RequestBody CreateRadniNalogRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(commandService.create(request.toCommand()));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RadniNalogResponse> update(@PathVariable Long id, @RequestBody UpdateRadniNalogCommand command) {
-        return ResponseEntity.ok(commandService.update(id, command));
+    public ResponseEntity<RadniNalogResponse> update(@PathVariable Long id, @RequestBody UpdateRadniNalogRequest request) {
+        return ResponseEntity.ok(commandService.update(id, request.toCommand()));
     }
 
     @PutMapping("/{id}/assign")
-    public ResponseEntity<RadniNalogResponse> assignWorker(@PathVariable Long id, @RequestBody AssignWorkerCommand command) {
-        return ResponseEntity.ok(commandService.assignWorker(id, command.getAssignedUserId()));
+    public ResponseEntity<RadniNalogResponse> assignWorker(@PathVariable Long id, @RequestBody AssignUserRequest request) {
+        return ResponseEntity.ok(commandService.assignWorker(id, request.toCommand()));
     }
 
     @DeleteMapping("/{id}")

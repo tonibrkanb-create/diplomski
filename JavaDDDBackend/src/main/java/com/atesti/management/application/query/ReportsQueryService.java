@@ -5,7 +5,7 @@ import com.atesti.clients.domain.repository.NaruciteljRepository;
 import com.atesti.management.application.query.dto.NaloziReportItemResponse;
 import com.atesti.management.application.query.dto.NaruciteljiReportItemResponse;
 import com.atesti.staffidentity.domain.model.User;
-import com.atesti.workorders.domain.model.RadniNalog;
+import com.atesti.workorders.domain.persistance.RadniNalogEntity;
 import com.atesti.workorders.domain.repository.RadniNalogRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,7 +30,7 @@ public class ReportsQueryService {
     private final ObjectMapper objectMapper;
 
     public List<NaloziReportItemResponse> getNaloziReport(String from, String to, String status) {
-        List<RadniNalog> nalozi = radniNalogRepository.findAll();
+        List<RadniNalogEntity> nalozi = radniNalogRepository.findAll();
 
         if (from != null && !from.isBlank()) {
             LocalDateTime fromDate = LocalDateTime.parse(from + "T00:00:00");
@@ -58,9 +58,9 @@ public class ReportsQueryService {
         List<Narucitelj> narucitelji = naruciteljRepository.findAll();
         narucitelji.sort((a, b) -> a.getName().compareToIgnoreCase(b.getName()));
 
-        List<RadniNalog> nalozi = radniNalogRepository.findAll();
+        List<RadniNalogEntity> nalozi = radniNalogRepository.findAll();
         Map<Long, Long> countMap = new HashMap<>();
-        for (RadniNalog n : nalozi) {
+        for (RadniNalogEntity n : nalozi) {
             if (n.getNaruciteljId() != null) {
                 countMap.merge(n.getNaruciteljId(), 1L, Long::sum);
             }
@@ -77,11 +77,11 @@ public class ReportsQueryService {
     }
 
     public List<NaloziReportItemResponse> getMyTasks(Long userId) {
-        List<RadniNalog> nalozi = radniNalogRepository.findByAssignedUserIdOrderByDatumDesc(userId);
+        List<RadniNalogEntity> nalozi = radniNalogRepository.findByAssignedUserIdOrderByDatumDesc(userId);
         return nalozi.stream().map(this::toReportItem).collect(Collectors.toList());
     }
 
-    private NaloziReportItemResponse toReportItem(RadniNalog n) {
+    private NaloziReportItemResponse toReportItem(RadniNalogEntity n) {
         List<Long> aktivnosti = parseAktivnostiJson(n.getAktivnosti());
         User assigned = n.getAssignedUser();
         String assignedName = null;

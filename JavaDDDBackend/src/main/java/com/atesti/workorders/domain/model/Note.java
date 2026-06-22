@@ -1,5 +1,6 @@
 package com.atesti.workorders.domain.model;
 
+import com.atesti.workorders.domain.persistance.RadniNalogEntity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -27,7 +28,7 @@ public class Note {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "radni_nalog_id")
-    private RadniNalog radniNalog;
+    private RadniNalogEntity radniNalogEntity;
 
     @Column(name = "radni_nalog_id", insertable = false, updatable = false)
     private Long radniNalogId;

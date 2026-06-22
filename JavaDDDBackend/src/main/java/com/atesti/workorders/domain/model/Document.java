@@ -1,5 +1,6 @@
 package com.atesti.workorders.domain.model;
 
+import com.atesti.workorders.domain.persistance.RadniNalogEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -32,7 +33,7 @@ public class Document {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "radni_nalog_id")
-    private RadniNalog radniNalog;
+    private RadniNalogEntity radniNalogEntity;
 
     @Column(name = "radni_nalog_id", insertable = false, updatable = false)
     private Long radniNalogId;

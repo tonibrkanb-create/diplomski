@@ -5,20 +5,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93f0fcb3-4b9a-42cc-9158-7193ec35e68d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../JavaSimpleBackend/src/JavaSimpleBackend.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/dto/query/RadniNalogDetailResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/domain/model/RadniNalogProjection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/domain/repository/RadniNalogReadRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/domain/repository/RadniNalogWriteRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/infrastructure/web/model/AssignUserRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/infrastructure/web/model/CreateRadniNalogRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/infrastructure/web/model/UpdateRadniNalogRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/command/RadniNalogCommandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/command/RadniNalogCommandService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/management/application/query/ReportsQueryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/management/application/query/ReportsQueryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/management/application/query/StatisticsQueryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/management/application/query/StatisticsQueryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/portal/application/command/RecenzijaCommandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/portal/application/command/RecenzijaCommandService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/portal/domain/model/Recenzija.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/portal/domain/model/Recenzija.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/command/DocumentCommandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/command/DocumentCommandService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/command/NoteCommandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/command/NoteCommandService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/command/RadniNalogCommandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/command/RadniNalogDomainService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/dto/command/AssignWorkerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/dto/command/AssignWorkerCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/dto/command/CreateRadniNalogCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/dto/command/CreateRadniNalogCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaMicroserviceBackend/clients-service/src/main/java/com/atesti/clients/domain/repository/NaruciteljRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JavaMicroserviceBackend/clients-service/src/main/java/com/atesti/clients/domain/repository/NaruciteljRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaSimpleBackend/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JavaSimpleBackend/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/seeders/20260401000007-seed-korisnici.js" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/seeders/20260401000007-seed-korisnici.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/services/radniNaloziService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/services/radniNaloziService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/app/postavke/postavke.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/postavke/postavke.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/app/radni-nalog/radni-nalog.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/radni-nalog/radni-nalog.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/app/statistics/statistics.css" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/statistics/statistics.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/app/statistics/statistics.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/statistics/statistics.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/app/statistics/statistics.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/statistics/statistics.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/dto/command/UpdateRadniNalogCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/dto/command/UpdateRadniNalogCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/dto/query/RadniNalogResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/dto/query/RadniNalogResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/dto/query/UskoroIsticeResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/dto/query/UskoroIsticeResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/query/RadniNalogPdfService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/query/RadniNalogPdfService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/query/RadniNalogQueryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/application/query/RadniNalogQueryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/domain/model/Document.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/domain/model/Document.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/domain/model/Note.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/domain/model/Note.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/domain/model/RadniNalog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/domain/persistance/RadniNalogEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/domain/model/UskoroIstice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/domain/model/UskoroIstice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/domain/repository/RadniNalogRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/domain/repository/RadniNalogRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/infrastructure/web/RadniNaloziController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atesti/workorders/infrastructure/web/RadniNaloziController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +46,15 @@
     <persistenceIdMap>
       <entry key="_/Users/toni/Downloads/Atesti-master/JavaDDDBackend" value="3E30wS79DxNUkPBBamNuCeVr5Zw" />
     </persistenceIdMap>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Record" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -45,22 +71,45 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/tonib/Documents/Projects/diplomski/diplomski/JavaDDDBackend&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.atesti-ddd-backend [--show-version].executor": "Run",
+    "Maven.atesti-ddd-backend [--version].executor": "Run",
+    "Maven.atesti-ddd-backend [-U,clean,compile].executor": "Run",
+    "Maven.atesti-ddd-backend [clean,compile,-e].executor": "Run",
+    "Maven.atesti-ddd-backend [clean,compile].executor": "Run",
+    "Maven.atesti-ddd-backend [dependency:tree,|...].executor": "Run",
+    "Maven.atesti-ddd-backend [help:effective-pom].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/tonib/Documents/Projects/diplomski/diplomski/JavaDDDBackend",
+    "project.structure.last.edited": "Global Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
+    "to.speed.mode.migration.done": "true"
   }
-}</component>
+}]]></component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn --show-version" />
+      <command value="mvn --version" />
+      <command value="mvn dependency:tree | findstr lombok" />
+      <command value="mvn help:effective-pom" />
+      <command value="mvn -U clean compile" />
+      <command value="mvn clean compile -e" />
+      <command value="mvn clean compile" />
+    </option>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -77,6 +126,10 @@
       <updated>1779392184132</updated>
     </task>
     <servers />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
